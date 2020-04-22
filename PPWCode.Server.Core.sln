@@ -29,7 +29,7 @@ ProjectSection(SolutionItems) = preProject
 	src\StyleCop-Tests.ruleset = src\StyleCop-Tests.ruleset
 EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PPWCode.API.Server", "src\PPWCode.API.Server\PPWCode.API.Server.csproj", "{5402A083-6C2C-407A-8AEB-FD6181875130}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PPWCode.Server.Core", "src\PPWCode.Server.Core\PPWCode.Server.Core.csproj", "{5402A083-6C2C-407A-8AEB-FD6181875130}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
