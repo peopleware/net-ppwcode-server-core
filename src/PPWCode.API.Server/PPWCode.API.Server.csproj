@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- target frameworks -->
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <!-- Root Namespace -->
+    <RootNamespace>PPWCode.Server.Core</RootNamespace>
+
+    <!-- nuget package -->
+    <IsPackable>true</IsPackable>
+
+    <!-- Stylecop -->
+    <CodeAnalysisRuleSet>..\StyleCop.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="[1.0.0-rc010026, 2)" />
+    <PackageReference Include="PPWCode.API.Core" Version="[1.0.0-rc010001, 2)" />
+    <PackageReference Include="Castle.Windsor" Version="5.0.1" />
+    <PackageReference Include="NHibernateProfiler.Appender" Version="5.0.5044" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.*" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Managers\Implementations\DropAll.sql" />
+  </ItemGroup>
+
+</Project>
