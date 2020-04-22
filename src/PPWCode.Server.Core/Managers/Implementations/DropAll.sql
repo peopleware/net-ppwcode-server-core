@@ -1,4 +1,4 @@
-﻿﻿if object_id(N'dbo.DropTables', N'P') is not null
+if object_id(N'dbo.DropTables', N'P') is not null
   DROP PROCEDURE dbo.DropTables;
 GO
 
