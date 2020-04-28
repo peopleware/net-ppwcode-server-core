@@ -9,11 +9,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Logging;
+
+using JetBrains.Annotations;
+
 using PPWCode.Server.Core.Managers.Interfaces;
 
 namespace PPWCode.Server.Core.Managers.Implementations
 {
     public abstract class Manager : IManager
     {
+        private ILogger _logger = NullLogger.Instance;
+
+        [NotNull]
+        [UsedImplicitly]
+        public ILogger Logger
+        {
+            get => _logger;
+            set
+            {
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                if (value != null)
+                {
+                    _logger = value;
+                }
+            }
+        }
     }
 }

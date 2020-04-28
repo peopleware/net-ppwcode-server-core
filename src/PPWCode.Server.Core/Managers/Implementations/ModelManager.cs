@@ -15,8 +15,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Castle.Core.Logging;
-
 using JetBrains.Annotations;
 
 using PPWCode.Server.Core.Managers.Interfaces;
@@ -32,8 +30,6 @@ namespace PPWCode.Server.Core.Managers.Implementations
         where TModel : class, IPersistentObject<TIdentity>
         where TIdentity : struct, IEquatable<TIdentity>
     {
-        private ILogger _logger = NullLogger.Instance;
-
         protected ModelManager([NotNull] IRepositoryAsync<TModel, TIdentity> repository)
         {
             Repository = repository;
@@ -41,21 +37,6 @@ namespace PPWCode.Server.Core.Managers.Implementations
 
         [NotNull]
         public IRepositoryAsync<TModel, TIdentity> Repository { get; }
-
-        [NotNull]
-        [UsedImplicitly]
-        public ILogger Logger
-        {
-            get => _logger;
-            set
-            {
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                if (value != null)
-                {
-                    _logger = value;
-                }
-            }
-        }
 
         /// <inheritdoc />
         public virtual Task<TModel> GetByIdAsync(TIdentity id, CancellationToken cancellationToken)

@@ -9,6 +9,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Castle.Core.Logging;
+
+using JetBrains.Annotations;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace PPWCode.Server.Core.API
@@ -18,5 +22,21 @@ namespace PPWCode.Server.Core.API
         : ControllerBase,
           IRestApiController
     {
+        private ILogger _logger = NullLogger.Instance;
+
+        [NotNull]
+        [UsedImplicitly]
+        public ILogger Logger
+        {
+            get => _logger;
+            set
+            {
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                if (value != null)
+                {
+                    _logger = value;
+                }
+            }
+        }
     }
 }
