@@ -31,14 +31,14 @@ namespace PPWCode.Server.Core.Managers.Implementations
         /// <inheritdoc />
         protected ModelManagerWithValidation(
             [NotNull] IRepositoryAsync<TModel, TIdentity> repository,
-            [NotNull] ModelValidator<TModel, TIdentity> modelValidator)
+            [NotNull] IModelValidator<TModel, TIdentity> modelValidator)
             : base(repository)
         {
             ModelValidator = modelValidator;
         }
 
         [NotNull]
-        public ModelValidator<TModel, TIdentity> ModelValidator { get; }
+        public IModelValidator<TModel, TIdentity> ModelValidator { get; }
 
         /// <inheritdoc />
         public override async Task SaveAsync(TModel model, CancellationToken cancellationToken)
