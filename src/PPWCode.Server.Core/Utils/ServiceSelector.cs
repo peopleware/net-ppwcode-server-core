@@ -13,26 +13,47 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
+using Castle.Core;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor;
+
 using JetBrains.Annotations;
 
 namespace PPWCode.Server.Core.Utils
 {
-    public static class ServiceSelector
+    public static class CastleExtensions
     {
-        public static IEnumerable<Type> Repository(
+        public static IWindsorContainer RegisterOpenGenerics(
+            [NotNull] this IWindsorContainer container,
+            [NotNull] Assembly assembly,
+            [NotNull] Type openGenericInterfaceType,
+            [NotNull] Type openGenericImplementationTYpe,
+            LifestyleType lifestyleType = LifestyleType.Singleton)
+        {
+            container
+                .Register(
+                    Classes
+                        .FromAssembly(assembly)
+                        .BasedOn(openGenericInterfaceType)
+                        .WithService.Select((t, b) => ServiceSelector(t, openGenericInterfaceType, openGenericImplementationTYpe))
+                        .Configure(r => r.LifeStyle.Is(lifestyleType)));
+            return container;
+        }
+
+        private static IEnumerable<Type> ServiceSelector(
             [NotNull] Type type,
-            [NotNull] Type repositoryInterfaceType,
-            [NotNull] Type repositoryType)
+            [NotNull] Type openGenericInterfaceType,
+            [NotNull] Type openGenericImplementationTYpe)
         {
             HashSet<Type> matches = new HashSet<Type>();
 
-            if (type == repositoryType)
+            if (type == openGenericImplementationTYpe)
             {
-                matches.Add(repositoryInterfaceType);
+                matches.Add(openGenericInterfaceType);
             }
             else
             {
-                AddFromInterface(type, repositoryInterfaceType, matches);
+                AddFromInterface(type, openGenericInterfaceType, matches);
             }
 
             return matches;
