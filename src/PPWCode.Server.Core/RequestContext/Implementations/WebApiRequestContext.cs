@@ -17,7 +17,11 @@ using System.Threading;
 
 using JetBrains.Annotations;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.Extensions.DependencyInjection;
 
 using PPWCode.Server.Core.RequestContext.Interfaces;
 using PPWCode.Vernacular.Persistence.IV;
@@ -39,9 +43,6 @@ namespace PPWCode.Server.Core.RequestContext.Implementations
                 },
                 StringComparer.OrdinalIgnoreCase);
 
-        [NotNull]
-        private readonly ControllerContext _controllerContext;
-
         [CanBeNull]
         private IPrincipal _principal;
 
@@ -53,40 +54,53 @@ namespace PPWCode.Server.Core.RequestContext.Implementations
             [NotNull] ControllerContext controllerContext)
             : base(timeProvider)
         {
-            _controllerContext = controllerContext;
+            ControllerContext = controllerContext;
         }
+
+        [NotNull]
+        protected ControllerContext ControllerContext { get; }
 
         /// <inheritdoc />
         public override IPrincipal User
-            => _principal = _principal ?? _controllerContext.HttpContext.User;
+            => _principal = _principal ?? ControllerContext.HttpContext.User;
 
         /// <inheritdoc />
         public override string TraceIdentifier
-            => _traceIdentifier = _traceIdentifier ?? _controllerContext.HttpContext.TraceIdentifier;
+            => _traceIdentifier = _traceIdentifier ?? ControllerContext.HttpContext.TraceIdentifier;
 
         /// <inheritdoc />
         public override CancellationToken RequestAborted
-            => _controllerContext.HttpContext.RequestAborted;
+            => ControllerContext.HttpContext.RequestAborted;
 
         /// <inheritdoc />
         public override bool IsReadOnly
-            => _safeHttpMethods.Contains(_controllerContext.HttpContext.Request.Method);
+            => _safeHttpMethods.Contains(ControllerContext.HttpContext.Request.Method);
 
         /// <inheritdoc />
         public override string Link(string route, IDictionary<string, object> parameters)
-            /*try
+        {
+            HttpContext httpContext = ControllerContext.HttpContext;
+            HttpRequest request = httpContext.Request;
+            IServiceProvider services = httpContext.RequestServices;
+            ControllerActionDescriptor actionDescriptor = ControllerContext.ActionDescriptor;
+            IUrlHelper urlHelper =
+                services
+                    .GetRequiredService<IUrlHelperFactory>()
+                    .GetUrlHelper(ControllerContext);
+            string url =
+                urlHelper
+                    .Action(
+                        actionDescriptor.ActionName,
+                        actionDescriptor.ControllerName,
+                        parameters,
+                        request.Scheme,
+                        request.Host.ToUriComponent());
+            if (string.IsNullOrEmpty(url))
             {
-                IDictionary<string, object> routeValues = new HttpRouteValueDictionary(parameters);
-                routeValues.Add(HttpRoute.HttpRouteKey, true);
-                IHttpRoute httpRoute = _httpConfiguration.Routes[route];
-                IHttpVirtualPathData virtualPath = httpRoute.GetVirtualPath(_httpRequestMessage, routeValues);
-                string relativePath = virtualPath.VirtualPath;
-                return $"{HostConfig.ExternalBaseUrl}/{relativePath}";
+                throw new InvalidOperationException(@"No route matches the supplied values.");
             }
-            catch (Exception exc)
-            {
-                throw new InternalProgrammingError("Cannot determine href", exc);
-            }*/
-            => null;
+
+            return url;
+        }
     }
 }
