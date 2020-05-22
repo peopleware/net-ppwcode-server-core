@@ -77,6 +77,6 @@ namespace PPWCode.Server.Core.RequestContext.Implementations
         public abstract string TraceIdentifier { get; }
 
         /// <inheritdoc />
-        public abstract string Link(string route, IDictionary<string, object> parameters);
+        public abstract string Link(string routeName, IDictionary<string, object> values);
     }
 }

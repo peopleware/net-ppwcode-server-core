@@ -85,10 +85,10 @@ namespace PPWCode.Server.Core.RequestContext.Interfaces
         /// <summary>
         ///     Build route using the given parameters.
         /// </summary>
-        /// <param name="route">name of rest api route</param>
-        /// <param name="parameters">Available route-parameters as key/value pair</param>
-        /// <returns>A url based on <paramref name="route" /> and <paramref name="parameters" /></returns>
+        /// <param name="routeName">name of rest api route</param>
+        /// <param name="values">Available route-parameters as key/value pair</param>
+        /// <returns>A url based on <paramref name="routeName" /> and <paramref name="values" /></returns>
         [CanBeNull]
-        string Link([NotNull] string route, [NotNull] IDictionary<string, object> parameters);
+        string Link([NotNull] string routeName, [NotNull] IDictionary<string, object> values);
     }
 }

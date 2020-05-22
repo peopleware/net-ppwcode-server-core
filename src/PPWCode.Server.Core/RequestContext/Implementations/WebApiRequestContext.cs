@@ -77,7 +77,7 @@ namespace PPWCode.Server.Core.RequestContext.Implementations
             => _safeHttpMethods.Contains(ControllerContext.HttpContext.Request.Method);
 
         /// <inheritdoc />
-        public override string Link(string route, IDictionary<string, object> parameters)
+        public override string Link(string routeName, IDictionary<string, object> values)
         {
             HttpContext httpContext = ControllerContext.HttpContext;
             HttpRequest request = httpContext.Request;
@@ -89,10 +89,9 @@ namespace PPWCode.Server.Core.RequestContext.Implementations
                     .GetUrlHelper(ControllerContext);
             string url =
                 urlHelper
-                    .Action(
-                        actionDescriptor.ActionName,
-                        actionDescriptor.ControllerName,
-                        parameters,
+                    .RouteUrl(
+                        routeName,
+                        values,
                         request.Scheme,
                         request.Host.ToUriComponent());
             if (string.IsNullOrEmpty(url))
