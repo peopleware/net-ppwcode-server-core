@@ -19,7 +19,6 @@ using JetBrains.Annotations;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -80,23 +79,15 @@ namespace PPWCode.Server.Core.RequestContext.Implementations
         public override string Link(string routeName, IDictionary<string, object> values)
         {
             HttpContext httpContext = ControllerContext.HttpContext;
-            HttpRequest request = httpContext.Request;
             IServiceProvider services = httpContext.RequestServices;
-            ControllerActionDescriptor actionDescriptor = ControllerContext.ActionDescriptor;
             IUrlHelper urlHelper =
                 services
                     .GetRequiredService<IUrlHelperFactory>()
                     .GetUrlHelper(ControllerContext);
-            string url =
-                urlHelper
-                    .RouteUrl(
-                        routeName,
-                        values,
-                        request.Scheme,
-                        request.Host.ToUriComponent());
+            string url = urlHelper.Link(routeName, values);
             if (string.IsNullOrEmpty(url))
             {
-                throw new InvalidOperationException(@"No route matches the supplied values.");
+                throw new InvalidOperationException(@"No route matches the supplied values, don't forget 'version' if you are using a versioned API.");
             }
 
             return url;
