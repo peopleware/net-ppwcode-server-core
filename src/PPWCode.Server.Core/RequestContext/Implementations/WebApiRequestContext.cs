@@ -78,6 +78,11 @@ namespace PPWCode.Server.Core.RequestContext.Implementations
         /// <inheritdoc />
         public override string Link(string routeName, IDictionary<string, object> values)
         {
+            if (string.IsNullOrWhiteSpace(routeName))
+            {
+                return null;
+            }
+
             HttpContext httpContext = ControllerContext.HttpContext;
             IServiceProvider services = httpContext.RequestServices;
             IUrlHelper urlHelper =

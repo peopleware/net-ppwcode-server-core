@@ -85,10 +85,14 @@ namespace PPWCode.Server.Core.RequestContext.Interfaces
         /// <summary>
         ///     Build route using the given parameters.
         /// </summary>
-        /// <param name="routeName">name of rest api route</param>
-        /// <param name="values">Available route-parameters as key/value pair</param>
+        /// <param name="routeName">Route name of an end-point</param>
+        /// <param name="values">Route parameters as key/value pair</param>
         /// <returns>A url based on <paramref name="routeName" /> and <paramref name="values" /></returns>
+        /// <exception cref="InvalidOperationException">
+        ///     If the supplied information, <paramref name="routeName" /> and
+        ///     <paramref name="values" />, are not sufficient to determine an URI.
+        /// </exception>
         [CanBeNull]
-        string Link([NotNull] string routeName, [NotNull] IDictionary<string, object> values);
+        string Link([CanBeNull] string routeName, [NotNull] IDictionary<string, object> values);
     }
 }
