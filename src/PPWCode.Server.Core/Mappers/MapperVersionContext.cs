@@ -21,11 +21,18 @@ namespace PPWCode.Server.Core.Mappers
     public class MapperVersionContext : MapperContext
     {
         public const string VersionRouteParameter = "version";
+        public const string DefaultApiVersionFormat = "VVV";
+        public static readonly ApiVersion ApiVersionV1 = new ApiVersion(1, 0);
+
+        public MapperVersionContext()
+            : this(ApiVersionV1, DefaultApiVersionFormat)
+        {
+        }
 
         public MapperVersionContext([NotNull] ApiVersion apiVersion, [CanBeNull] string apiVersionFormat = null)
         {
             ApiVersion = apiVersion;
-            ApiVersionFormat = apiVersionFormat ?? "VVV";
+            ApiVersionFormat = apiVersionFormat ?? DefaultApiVersionFormat;
         }
 
         [NotNull]
