@@ -51,7 +51,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
 
         /// <inheritdoc />
         [ContractAnnotation("=> halt")]
-        protected sealed override IDictionary<string, object> GetRouteParameters(TModel source)
+        protected sealed override IDictionary<string, object> GetRouteParameters(TModel source, TContext context)
             => throw new InternalProgrammingError($"Mapping from {typeof(TModel).FullName} to {typeof(TDto).FullName} isn't supported.");
 
         /// <inheritdoc />

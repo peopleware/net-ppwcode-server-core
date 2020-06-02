@@ -170,7 +170,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
             CancellationToken cancellationToken)
         {
             destination.Id = source.Id;
-            destination.HRef = GetHref(source);
+            destination.HRef = GetHref(source, context);
 
             return Task.CompletedTask;
         }
@@ -187,23 +187,33 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         ///     Calculates a unique <see cref="Uri" />, for the <paramref name="source" />
         /// </summary>
         /// <param name="source">The model for which we have to calculate a unique <see cref="Uri" /></param>
+        /// <param name="context">Context that can be used while mapping</param>
         /// <returns>
         ///     A unique <see cref="Uri" /> that identifies the <paramref name="source" />
         /// </returns>
-        protected virtual string GetHref([NotNull] TModel source)
-            => RequestContext.Link(Route, GetRouteParameters(source));
+        protected virtual string GetHref([NotNull] TModel source, TContext context)
+        {
+            IDictionary<string, object> routeParameters = GetRouteParameters(source, context);
+            if (context is MapperVersionContext versionContext)
+            {
+                versionContext.AddVersionToRouteParameters(routeParameters);
+            }
+
+            return RequestContext.Link(Route, routeParameters);
+        }
 
         /// <summary>
         ///     Returns all identifiers that are necessary to calculate a unique <see cref="Uri" /> to our resource of type
         ///     <typeparamref name="TModel" />.
         /// </summary>
         /// <param name="source">Model where we extract our information</param>
+        /// <param name="context">Context that can be used while mapping</param>
         /// <returns>
         ///     All identifiers necessary to calculate a unique <see cref="Uri" /> to our resource of type
         ///     <typeparamref name="TModel" />.
         /// </returns>
         [NotNull]
-        protected abstract IDictionary<string, object> GetRouteParameters([NotNull] TModel source);
+        protected abstract IDictionary<string, object> GetRouteParameters([NotNull] TModel source, TContext context);
 
         /// <summary>
         ///     Creates a new model of type <typeparamref name="TModel" /> using our Data Transfer Object <paramref name="dto" />
