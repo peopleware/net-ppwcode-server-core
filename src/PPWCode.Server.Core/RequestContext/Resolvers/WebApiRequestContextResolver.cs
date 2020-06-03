@@ -10,7 +10,6 @@
 // limitations under the License.
 
 using Castle.Core;
-using Castle.Core.Internal;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Context;
 
@@ -40,7 +39,7 @@ namespace PPWCode.Server.Core.RequestContext.Resolvers
         {
             const string ControllerContext = "controllerContext";
 
-            return dependency.TargetType.Is<IRequestContext>()
+            return (dependency.TargetType == typeof(IRequestContext))
                    && context.AdditionalArguments.Contains(ControllerContext)
                    && context.AdditionalArguments[ControllerContext] is ControllerContext;
         }
