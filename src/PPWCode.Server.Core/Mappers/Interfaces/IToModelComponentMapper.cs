@@ -40,6 +40,17 @@ namespace PPWCode.Server.Core.Mappers.Interfaces
         ///     <typeparamref name="TComponent" />.
         /// </summary>
         /// <param name="source">Object to be converted</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
+        /// <returns>The converted object of type <typeparamref name="TComponent" /></returns>
+        [NotNull]
+        [ItemCanBeNull]
+        Task<TComponent> MapAsync([CanBeNull] TDto source, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///     Convert an object of type <typeparamref name="TDto" /> to a new created object of type
+        ///     <typeparamref name="TComponent" />.
+        /// </summary>
+        /// <param name="source">Object to be converted</param>
         /// <param name="context">Optional context of type <typeparamref name="TContext" /></param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
         /// <returns>The converted object of type <typeparamref name="TComponent" /></returns>

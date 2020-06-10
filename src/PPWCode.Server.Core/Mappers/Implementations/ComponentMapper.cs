@@ -57,6 +57,10 @@ namespace PPWCode.Server.Core.Mappers.Implementations
             CancellationToken cancellationToken);
 
         /// <inheritdoc />
+        public Task<TModel> MapAsync(TDto source, CancellationToken cancellationToken = default)
+            => MapAsync(source, new TContext(), cancellationToken);
+
+        /// <inheritdoc />
         public virtual Task<TModel> MapAsync(TDto source, TContext context, CancellationToken cancellationToken)
             => Task.FromResult(
                 source == null
