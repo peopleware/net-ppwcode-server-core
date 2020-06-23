@@ -40,7 +40,7 @@ namespace PPWCode.Server.Core.Mappers.Interfaces
         : IToDtoComponentMapper<TModel, TDto, TContext>
         where TModel : IPersistentObject<TIdentity>
         where TIdentity : struct, IEquatable<TIdentity>
-        where TDto : PersistentDto<TIdentity>
+        where TDto : class, IPersistentDto<TIdentity>
         where TContext : MapperContext, new()
     {
         /// <summary>

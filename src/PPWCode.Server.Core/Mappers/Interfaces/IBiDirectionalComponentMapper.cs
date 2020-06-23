@@ -29,7 +29,7 @@ namespace PPWCode.Server.Core.Mappers.Interfaces
         : IToDtoComponentMapper<TComponent, TDto, TContext>,
           IToModelComponentMapper<TComponent, TDto, TContext>
         where TComponent : ICivilizedObject
-        where TDto : Dto
+        where TDto : class, IDto
         where TContext : MapperContext, new()
     {
     }

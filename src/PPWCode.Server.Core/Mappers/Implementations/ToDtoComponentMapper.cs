@@ -24,7 +24,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
     public abstract class ToDtoComponentMapper<TModel, TDto, TContext>
         : IToDtoComponentMapper<TModel, TDto, TContext>
         where TModel : class, ICivilizedObject
-        where TDto : Dto
+        where TDto : class, IDto
         where TContext : MapperContext, new()
     {
         /// <inheritdoc />

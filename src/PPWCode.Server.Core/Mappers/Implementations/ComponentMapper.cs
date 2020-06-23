@@ -25,7 +25,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
     public abstract class ComponentMapper<TModel, TDto, TContext>
         : IBiDirectionalComponentMapper<TModel, TDto, TContext>
         where TModel : class, ICivilizedObject
-        where TDto : Dto
+        where TDto : class, IDto
         where TContext : MapperContext, new()
     {
         /// <inheritdoc />

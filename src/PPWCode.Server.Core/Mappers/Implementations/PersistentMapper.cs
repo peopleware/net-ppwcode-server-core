@@ -1,4 +1,4 @@
-﻿// Copyright 2020 by PeopleWare n.v..
+// Copyright 2020 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -39,7 +39,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
           IBiDirectionalPersistentObjectMapper<TModel, TIdentity, TDto, TContext>
         where TModel : class, IPersistentObject<TIdentity>
         where TIdentity : struct, IEquatable<TIdentity>
-        where TDto : PersistentDto<TIdentity>
+        where TDto : class, IPersistentDto<TIdentity>
         where TContext : MapperContext, new()
     {
         // ReSharper disable once StaticMemberInGenericType
