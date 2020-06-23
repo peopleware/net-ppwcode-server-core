@@ -252,13 +252,20 @@ namespace PPWCode.Server.Core.Mappers.Implementations
             [CanBeNull] IDictionary<string, object> routeParameters = null)
         {
             routeParameters = routeParameters ?? GetRouteParameters(source, context);
-            if (context is MapperVersionContext versionContext)
+            route = route ?? Route;
+
+            if ((route != null) && (routeParameters != null))
             {
-                versionContext.AddVersionToRouteParameters(routeParameters);
+                if (context is MapperVersionContext versionContext)
+                {
+                    versionContext.AddVersionToRouteParameters(routeParameters);
+                }
+
+                string link = RequestContext.Link(route, routeParameters);
+                return link != null ? new Uri(link) : null;
             }
 
-            string link = RequestContext.Link(route ?? Route, routeParameters);
-            return link != null ? new Uri(link) : null;
+            return null;
         }
 
         /// <summary>
@@ -271,7 +278,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         ///     All identifiers necessary to calculate a unique <see cref="Uri" /> to our resource of type
         ///     <typeparamref name="TModel" />.
         /// </returns>
-        [NotNull]
+        [CanBeNull]
         protected abstract IDictionary<string, object> GetRouteParameters([NotNull] TModel source, [NotNull] TContext context);
 
         /// <summary>
