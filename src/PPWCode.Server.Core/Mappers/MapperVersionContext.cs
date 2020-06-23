@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PPWCode.Server.Core.Mappers
 {
-    [UsedImplicitly]
     public class MapperVersionContext : MapperContext
     {
         public const string VersionRouteParameter = "version";

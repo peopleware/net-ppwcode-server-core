@@ -9,11 +9,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using JetBrains.Annotations;
-
 namespace PPWCode.Server.Core.Mappers
 {
-    [UsedImplicitly]
     public class MapperContext
     {
     }
