@@ -63,10 +63,5 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         [ContractAnnotation("=> halt")]
         protected sealed override TDto CreateDto()
             => throw new InternalProgrammingError($"Mapping from {typeof(TModel).FullName} to {typeof(TDto).FullName} isn't supported.");
-
-        /// <inheritdoc />
-        [ContractAnnotation("=> halt")]
-        protected sealed override TModel CreateModel(TDto dto, TContext context)
-            => throw new InternalProgrammingError($"Mapping from {typeof(TModel).FullName} to {typeof(TDto).FullName} isn't supported.");
     }
 }
