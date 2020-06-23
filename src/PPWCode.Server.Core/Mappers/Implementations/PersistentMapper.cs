@@ -182,13 +182,14 @@ namespace PPWCode.Server.Core.Mappers.Implementations
             [NotNull] string key,
             [CanBeNull] Uri href)
         {
-            if (destination.Links == null)
-            {
-                destination.Links = new Dictionary<string, Uri>();
-            }
 
-            if ((href != null) && !destination.Links.ContainsKey(key))
+            if ((href != null) && ((destination.Links == null) || !destination.Links.ContainsKey(key)))
             {
+                if (destination.Links == null)
+                {
+                    destination.Links = new Dictionary<string, Uri>();
+                }
+
                 destination.Links.Add(key, href);
                 return true;
             }
