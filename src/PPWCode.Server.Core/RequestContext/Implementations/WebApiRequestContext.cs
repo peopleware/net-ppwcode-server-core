@@ -89,13 +89,7 @@ namespace PPWCode.Server.Core.RequestContext.Implementations
                 services
                     .GetRequiredService<IUrlHelperFactory>()
                     .GetUrlHelper(ControllerContext);
-            string url = urlHelper.Link(routeName, values);
-            if (string.IsNullOrEmpty(url))
-            {
-                throw new InvalidOperationException(@"No route matches the supplied values, don't forget 'version' if you are using a versioned API.");
-            }
-
-            return url;
+            return urlHelper.Link(routeName, values);
         }
     }
 }
