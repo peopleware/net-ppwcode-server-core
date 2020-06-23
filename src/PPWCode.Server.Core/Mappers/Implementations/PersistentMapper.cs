@@ -238,19 +238,25 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         /// </summary>
         /// <param name="source">The model for which we have to calculate a unique <see cref="Uri" /></param>
         /// <param name="context">Context that can be used while mapping</param>
+        /// <param name="route">Optional route, if rout is <c>null</c>, <see cref="Route"/> will be taken</param>
+        /// <param name="routeParameters">Optional route-parameters, if rout-parameters is <c>null</c>, <see cref="GetRouteParameters"/> will be taken</param>
         /// <returns>
-        ///     A unique <see cref="Uri" /> that identifies the <paramref name="source" />
+        ///     A unique <see cref="Uri" />, based on <paramref name="route"/> and <paramref name="routeParameters"/>.
         /// </returns>
         [CanBeNull]
-        protected Uri GetHref([NotNull] TModel source, [NotNull] TContext context)
+        protected Uri GetHref(
+            [NotNull] TModel source,
+            [NotNull] TContext context,
+            [CanBeNull] string route = null,
+            [CanBeNull] IDictionary<string, object> routeParameters = null)
         {
-            IDictionary<string, object> routeParameters = GetRouteParameters(source, context);
+            routeParameters = routeParameters ?? GetRouteParameters(source, context);
             if (context is MapperVersionContext versionContext)
             {
                 versionContext.AddVersionToRouteParameters(routeParameters);
             }
 
-            string link = RequestContext.Link(Route, routeParameters);
+            string link = RequestContext.Link(route ?? Route, routeParameters);
             return link != null ? new Uri(link) : null;
         }
 
