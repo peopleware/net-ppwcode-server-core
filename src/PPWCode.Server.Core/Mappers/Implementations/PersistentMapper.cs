@@ -69,7 +69,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         ///     The <see cref="Route" /> together with the member <see cref="GetRouteParameters" /> is being used to calculate a
         ///     unique <see cref="Uri" /> to our resource of type <typeparamref name="TModel" />.
         /// </summary>
-        [NotNull]
+        [CanBeNull]
         protected abstract string Route { get; }
 
         /// <summary>
