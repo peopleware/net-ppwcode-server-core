@@ -203,7 +203,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         /// <param name="context">Context that can be used while mapping.</param>
         /// <returns>List of key / href pairs, to be added to our Links dictionary.</returns>
         [NotNull]
-        protected IEnumerable<KeyValuePair<string, Uri>> GetAdditionalLinks([NotNull] TModel source, [NotNull] TContext context)
+        protected virtual IEnumerable<KeyValuePair<string, Uri>> GetAdditionalLinks([NotNull] TModel source, [NotNull] TContext context)
         {
             yield break;
         }
