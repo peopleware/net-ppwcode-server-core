@@ -1,4 +1,4 @@
-// Copyright 2020 by PeopleWare n.v..
+﻿// Copyright 2020 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -71,6 +71,12 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         /// </summary>
         [NotNull]
         protected abstract string Route { get; }
+
+        /// <summary>
+        ///     Name of self for entry in Links.
+        /// </summary>
+        protected virtual string SelfKey
+            => "self";
 
         /// <inheritdoc />
         public sealed override Task MapAsync(
@@ -162,15 +168,59 @@ namespace PPWCode.Server.Core.Mappers.Implementations
             return ExecuteAsync(WrapperAsync, cancellationToken);
         }
 
+        /// <summary>
+        ///     Add a new link to <see cref="ILinksDto.Links" />.
+        /// </summary>
+        /// <param name="destination">Dto that contains a member <see cref="ILinksDto.Links" /></param>
+        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
+        /// <param name="key">Key of the link</param>
+        /// <param name="href">Link itself</param>
+        /// <remarks>A key can be added, if the key is not already exists as link and the reference is not null.</remarks>
+        /// <result>If they is added, it will return true.</result>
+        protected virtual bool AddLink(
+            [NotNull] TDto destination,
+            [NotNull] string key,
+            [CanBeNull] Uri href)
+        {
+            if (destination.Links == null)
+            {
+                destination.Links = new Dictionary<string, Uri>();
+            }
+
+            if ((href != null) && !destination.Links.ContainsKey(key))
+            {
+                destination.Links.Add(key, href);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        ///     The possibility to enrich the <see cref="ILinksDto.Links" /> list.
+        /// </summary>
+        /// <param name="source">The model</param>
+        /// <param name="context">Context that can be used while mapping.</param>
+        /// <returns>List of key / href pairs, to be added to our Links dictionary.</returns>
+        [NotNull]
+        protected IEnumerable<KeyValuePair<string, Uri>> GetAdditionalLinks([NotNull] TModel source, [NotNull] TContext context)
+        {
+            yield break;
+        }
+
         /// <inheritdoc cref="MapAsync(TModel,TDto,TContext,System.Threading.CancellationToken)" />
         protected virtual Task OnMapAsync(
             [NotNull] TModel source,
             [NotNull] TDto destination,
-            TContext context,
+            [NotNull] TContext context,
             CancellationToken cancellationToken)
         {
             destination.Id = source.Id;
-            destination.HRef = GetHref(source, context);
+            AddLink(destination, SelfKey, GetHref(source, context));
+            foreach (KeyValuePair<string, Uri> additionalLink in GetAdditionalLinks(source, context))
+            {
+                AddLink(destination, additionalLink.Key, additionalLink.Value);
+            }
 
             return Task.CompletedTask;
         }
@@ -179,7 +229,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         protected virtual Task OnMapAsync(
             [NotNull] TDto source,
             [NotNull] TModel destination,
-            TContext context,
+            [NotNull] TContext context,
             CancellationToken cancellationToken)
             => Task.CompletedTask;
 
@@ -191,7 +241,8 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         /// <returns>
         ///     A unique <see cref="Uri" /> that identifies the <paramref name="source" />
         /// </returns>
-        protected virtual string GetHref([NotNull] TModel source, TContext context)
+        [CanBeNull]
+        protected Uri GetHref([NotNull] TModel source, [NotNull] TContext context)
         {
             IDictionary<string, object> routeParameters = GetRouteParameters(source, context);
             if (context is MapperVersionContext versionContext)
@@ -199,7 +250,8 @@ namespace PPWCode.Server.Core.Mappers.Implementations
                 versionContext.AddVersionToRouteParameters(routeParameters);
             }
 
-            return RequestContext.Link(Route, routeParameters);
+            string link = RequestContext.Link(Route, routeParameters);
+            return link != null ? new Uri(link) : null;
         }
 
         /// <summary>
@@ -213,7 +265,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         ///     <typeparamref name="TModel" />.
         /// </returns>
         [NotNull]
-        protected abstract IDictionary<string, object> GetRouteParameters([NotNull] TModel source, TContext context);
+        protected abstract IDictionary<string, object> GetRouteParameters([NotNull] TModel source, [NotNull] TContext context);
 
         /// <summary>
         ///     Creates a new model of type <typeparamref name="TModel" /> using our Data Transfer Object <paramref name="dto" />
@@ -234,7 +286,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         ///         , identified by <see cref="PersistentDto{TIdentity}.Id" />
         ///     </para>
         /// </remarks>
-        protected virtual async Task<TModel> FetchOrCreateModelAsync([NotNull] TDto dto, [CanBeNull] TContext context, CancellationToken cancellationToken)
+        protected virtual async Task<TModel> FetchOrCreateModelAsync([NotNull] TDto dto, [NotNull] TContext context, CancellationToken cancellationToken)
             => !dto.IsTransient
                    ? await Repository.GetByIdAsync(dto.Id.GetValueOrDefault(), cancellationToken).ConfigureAwait(false)
                      ?? throw new SemanticException($"Unable to find a persistent model of type {typeof(TModel).FullName}, identified by {dto.Id}.")
