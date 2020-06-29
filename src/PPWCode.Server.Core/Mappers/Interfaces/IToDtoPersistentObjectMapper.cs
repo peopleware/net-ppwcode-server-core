@@ -51,6 +51,7 @@ namespace PPWCode.Server.Core.Mappers.Interfaces
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
         /// <returns>The converted models of type <typeparamref name="TDto" />.</returns>
         [NotNull]
+        [ItemNotNull]
         Task<TDto[]> MapAsync([NotNull] [ItemNotNull] IEnumerable<TModel> models, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -62,6 +63,7 @@ namespace PPWCode.Server.Core.Mappers.Interfaces
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
         /// <returns>The converted models of type <typeparamref name="TDto" />.</returns>
         [NotNull]
+        [ItemNotNull]
         Task<TDto[]> MapAsync([NotNull] [ItemNotNull] IEnumerable<TModel> models, [NotNull] TContext context, CancellationToken cancellationToken = default);
     }
 }
