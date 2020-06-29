@@ -23,12 +23,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
 
     <!-- PPWCode -->
-    <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="1.0.0-rc010032" />
+    <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="1.0.0-rc010033" />
     <PackageReference Include="PPWCode.API.Core" Version="1.0.0-rc010009" />
 
     <!-- NHibernate -->
     <PackageReference Include="Castle.Windsor" Version="5.0.1" />
-    <PackageReference Include="NHibernateProfiler.Appender" Version="5.0.5044" />
+    <PackageReference Include="NHibernateProfiler.Appender" Version="5.0.5047" />
 
     <!-- System package mismatches -->
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
