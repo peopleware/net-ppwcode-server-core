@@ -1,4 +1,4 @@
-// Copyright 2020 by PeopleWare n.v..
+﻿// Copyright 2020 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -77,6 +78,12 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         /// </summary>
         protected virtual string SelfKey
             => "self";
+
+        /// <summary>
+        ///     Name of href for entry in Links.
+        /// </summary>
+        protected virtual string HRefKey
+            => "href";
 
         /// <inheritdoc />
         public sealed override Task MapAsync(
@@ -169,28 +176,27 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         }
 
         /// <summary>
-        ///     Add a new link to <see cref="ILinksDto.Links" />.
+        ///     Add a new link to <see cref="ILinksDto{TIdentity}.Links" />.
         /// </summary>
-        /// <param name="destination">Dto that contains a member <see cref="ILinksDto.Links" /></param>
+        /// <param name="destination">Dto that contains a member <see cref="ILinksDto{TIdentity}.Links" /></param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
         /// <param name="key">Key of the link</param>
         /// <param name="href">Link itself</param>
         /// <remarks>A key can be added, if the key is not already exists as link and the reference is not null.</remarks>
         /// <result>If they is added, it will return true.</result>
         protected virtual bool AddLink(
-            [NotNull] TDto destination,
+            [NotNull] ILinksDto<TIdentity> destination,
             [NotNull] string key,
-            [CanBeNull] Uri href)
+            [NotNull] IDictionary<string, object> value)
         {
-
-            if ((href != null) && ((destination.Links == null) || !destination.Links.ContainsKey(key)))
+            if (destination.Links == null)
             {
-                if (destination.Links == null)
-                {
-                    destination.Links = new Dictionary<string, Uri>();
-                }
+                destination.Links = new Dictionary<string, IDictionary<string, object>>();
+            }
 
-                destination.Links.Add(key, href);
+            if (!destination.Links.ContainsKey(key))
+            {
+                destination.Links.Add(key, value);
                 return true;
             }
 
@@ -198,13 +204,15 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         }
 
         /// <summary>
-        ///     The possibility to enrich the <see cref="ILinksDto.Links" /> list.
+        ///     The possibility to enrich the <see cref="ILinksDto{TIdentity}.Links" /> list.
         /// </summary>
         /// <param name="source">The model</param>
         /// <param name="context">Context that can be used while mapping.</param>
         /// <returns>List of key / href pairs, to be added to our Links dictionary.</returns>
         [NotNull]
-        protected virtual IEnumerable<KeyValuePair<string, Uri>> GetAdditionalLinks([NotNull] TModel source, [NotNull] TContext context)
+        protected virtual IEnumerable<KeyValuePair<string, IDictionary<string, object>>> GetAdditionalLinks(
+            [NotNull] TModel source,
+            [NotNull] TContext context)
         {
             yield break;
         }
@@ -218,10 +226,20 @@ namespace PPWCode.Server.Core.Mappers.Implementations
             CancellationToken cancellationToken)
         {
             destination.Id = source.Id;
-            AddLink(destination, SelfKey, GetHref(source, context));
-            foreach (KeyValuePair<string, Uri> additionalLink in GetAdditionalLinks(source, context))
+            if (destination is ILinksDto<TIdentity> linksDto)
             {
-                AddLink(destination, additionalLink.Key, additionalLink.Value);
+                Uri href = GetHref(source, context);
+                if (href != null)
+                {
+                    AddLink(linksDto, SelfKey, new Dictionary<string, object> { { HRefKey, href } });
+                }
+
+                foreach (KeyValuePair<string, IDictionary<string, object>> additionalLink in
+                    GetAdditionalLinks(source, context)
+                        .Where(kv => !string.IsNullOrWhiteSpace(kv.Key) && (kv.Value != null)))
+                {
+                    AddLink(linksDto, additionalLink.Key, additionalLink.Value);
+                }
             }
 
             return Task.CompletedTask;
