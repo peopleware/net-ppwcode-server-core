@@ -9,11 +9,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
 using Castle.Core.Logging;
 
 using JetBrains.Annotations;
 
 using Microsoft.AspNetCore.Mvc;
+
+using PPWCode.API.Core;
+using PPWCode.Server.Core.Mappers;
+using PPWCode.Server.Core.Mappers.Interfaces;
+using PPWCode.Vernacular.Persistence.IV;
 
 namespace PPWCode.Server.Core.API
 {
@@ -38,5 +47,36 @@ namespace PPWCode.Server.Core.API
                 }
             }
         }
+
+        /// <summary>
+        ///     Converts a <see cref="IPagedList{TModel}" />, where <c>T</c> is equal to <typeparamref name="TModel" />, to a
+        ///     <see cref="PagedList{TDto}" /> using the mapper <paramref name="itemMapper" />, where <c>T</c> is equal to
+        ///     <typeparamref name="TDto" />.
+        /// </summary>
+        /// <typeparam name="TModel">Type of our model.</typeparam>
+        /// <typeparam name="TIdentity">Type of identity used by <typeparamref name="TModel" />.</typeparam>
+        /// <typeparam name="TDto">Type of our dto.</typeparam>
+        /// <typeparam name="TContext">Type of an optional context.</typeparam>
+        /// <param name="pagedModels">A paged list of <typeparamref name="TModel"></typeparamref>.</param>
+        /// <param name="itemMapper">A mapper that can convert a model to dto.</param>
+        /// <result>
+        ///     A <see cref="IPagedList{TModel}" />, where <c>T</c> is equal to <typeparamref name="TModel" />.
+        /// </result>
+        [NotNull]
+        [ItemNotNull]
+        protected virtual async Task<PagedList<TDto>> MapPagedListAsync<TModel, TIdentity, TDto, TContext>(
+            [NotNull] IPagedList<TModel> pagedModels,
+            [NotNull] IToDtoPersistentObjectMapper<TModel, TIdentity, TDto, TContext> itemMapper,
+            [CanBeNull] TContext context = null,
+            CancellationToken cancellationToken = default)
+            where TModel : IPersistentObject<TIdentity>
+            where TIdentity : struct, IEquatable<TIdentity>
+            where TDto : class, IPersistentDto<TIdentity>
+            where TContext : MapperContext, new()
+            => new PagedList<TDto>(
+                await itemMapper.MapAsync(pagedModels.Items, context ?? new TContext(), cancellationToken),
+                pagedModels.PageIndex,
+                pagedModels.PageSize,
+                pagedModels.TotalCount);
     }
 }
