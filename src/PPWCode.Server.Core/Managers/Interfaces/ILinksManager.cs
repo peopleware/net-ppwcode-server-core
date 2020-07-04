@@ -19,7 +19,7 @@ namespace PPWCode.Server.Core.Managers.Interfaces
 {
     /// <summary>
     ///     Initialize the <see cref="ILinksDto{TIdentity}.Links" /> and <see cref="ILinksDto{TIdentity}.HRef" />
-    ///     members in a given Dto of type <typeparam name="TDto"></typeparam>.
+    ///     members in a given Dto of type <typeparamref name="TDto" />.
     /// </summary>
     /// <typeparam name="TModel">A model of <see cref="IPersistentObject{T}" />.</typeparam>
     /// <typeparam name="TIdentity">Type of identity used by <typeparamref name="TModel" /></typeparam>
@@ -43,7 +43,7 @@ namespace PPWCode.Server.Core.Managers.Interfaces
         /// </remarks>
         void Initialize(TModel model, TDto dto);
 
-        /// <inheritdoc cref="Initialize(TModel,TDto)"/>
+        /// <inheritdoc cref="Initialize(TModel,TDto)" />
         /// <param name="context">Optional context that can be used as additional data provider.</param>
         void Initialize(TModel model, TDto dto, TContext context);
     }
