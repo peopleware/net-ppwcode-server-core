@@ -12,7 +12,6 @@
 using JetBrains.Annotations;
 
 using PPWCode.Server.Core.Mappers.Interfaces;
-using PPWCode.Vernacular.NHibernate.III;
 using PPWCode.Vernacular.Persistence.IV;
 
 namespace PPWCode.Server.Core.Mappers.Implementations
@@ -23,14 +22,6 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         where TModel : IInsertAuditable
         where TDto : PPWCode.API.Core.IInsertAuditable
     {
-        public InsertAuditableMapper([NotNull] IIdentityProvider identityProvider)
-        {
-            IdentityProvider = identityProvider;
-        }
-
-        [NotNull]
-        public IIdentityProvider IdentityProvider { get; }
-
         /// <inheritdoc />
         public virtual void Map(TModel source, TDto destination)
         {

@@ -12,7 +12,6 @@
 using JetBrains.Annotations;
 
 using PPWCode.Server.Core.Mappers.Interfaces;
-using PPWCode.Vernacular.NHibernate.III;
 using PPWCode.Vernacular.Persistence.IV;
 
 namespace PPWCode.Server.Core.Mappers.Implementations
@@ -25,10 +24,6 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         where TModel : IAuditable
         where TDto : PPWCode.API.Core.IAuditable
     {
-        public AuditableMapper([NotNull] IIdentityProvider identityProvider)
-            : base(identityProvider)
-        {
-        }
 
         /// <inheritdoc />
         public override void Map(TModel source, TDto destination)
