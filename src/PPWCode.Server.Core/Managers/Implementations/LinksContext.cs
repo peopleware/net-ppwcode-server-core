@@ -15,20 +15,16 @@ using JetBrains.Annotations;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace PPWCode.Server.Core.Mappers
+namespace PPWCode.Server.Core.Managers.Implementations
 {
-    public class MapperVersionContext : MapperContext
+    public abstract class LinksContext
     {
         public const string VersionRouteParameter = "version";
         public const string DefaultApiVersionFormat = "VVV";
-        public static readonly ApiVersion ApiVersionV1 = new ApiVersion(1, 0);
 
-        public MapperVersionContext()
-            : this(ApiVersionV1, DefaultApiVersionFormat)
-        {
-        }
-
-        public MapperVersionContext([NotNull] ApiVersion apiVersion, [CanBeNull] string apiVersionFormat = null)
+        protected LinksContext(
+            [NotNull] ApiVersion apiVersion,
+            [CanBeNull] string apiVersionFormat = null)
         {
             ApiVersion = apiVersion;
             ApiVersionFormat = apiVersionFormat ?? DefaultApiVersionFormat;
