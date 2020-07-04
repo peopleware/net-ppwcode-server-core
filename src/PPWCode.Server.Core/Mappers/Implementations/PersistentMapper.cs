@@ -87,30 +87,30 @@ namespace PPWCode.Server.Core.Mappers.Implementations
 
         /// <inheritdoc />
         public sealed override Task MapAsync(
-            TModel source,
-            TDto destination,
+            TModel model,
+            TDto dto,
             TContext context,
             CancellationToken cancellationToken)
-            => ExecuteAsync(can => OnMapAsync(source, destination, context, can), cancellationToken);
+            => ExecuteAsync(can => OnMapAsync(model, dto, context, can), cancellationToken);
 
         /// <inheritdoc />
         public sealed override Task MapAsync(
-            TDto source,
-            TModel destination,
+            TDto dto,
+            TModel model,
             TContext context,
             CancellationToken cancellationToken)
-            => OnMapAsync(source, destination, context, cancellationToken);
+            => OnMapAsync(dto, model, context, cancellationToken);
 
         /// <inheritdoc />
-        public sealed override async Task<TModel> MapAsync(TDto source, TContext context, CancellationToken cancellationToken)
+        public sealed override async Task<TModel> MapAsync(TDto dto, TContext context, CancellationToken cancellationToken)
         {
             TModel model =
-                source == default(TDto)
+                dto == default(TDto)
                     ? default
-                    : await FetchOrCreateModelAsync(source, context, cancellationToken).ConfigureAwait(false);
+                    : await FetchOrCreateModelAsync(dto, context, cancellationToken).ConfigureAwait(false);
             if (model != null)
             {
-                await MapAsync(source, model, context, cancellationToken).ConfigureAwait(false);
+                await MapAsync(dto, model, context, cancellationToken).ConfigureAwait(false);
             }
 
             return model;
@@ -220,22 +220,22 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         /// <inheritdoc cref="MapAsync(TModel,TDto,TContext,System.Threading.CancellationToken)" />
         [NotNull]
         protected virtual Task OnMapAsync(
-            [NotNull] TModel source,
-            [NotNull] TDto destination,
+            [NotNull] TModel model,
+            [NotNull] TDto dto,
             [NotNull] TContext context,
             CancellationToken cancellationToken)
         {
-            destination.Id = source.Id;
-            if (destination is ILinksDto<TIdentity> linksDto)
+            dto.Id = model.Id;
+            if (dto is ILinksDto<TIdentity> linksDto)
             {
-                Uri href = GetHref(source, context);
+                Uri href = GetHref(model, context);
                 if (href != null)
                 {
                     AddLink(linksDto, SelfKey, new Dictionary<string, object> { { HRefKey, href } });
                 }
 
                 foreach (KeyValuePair<string, IDictionary<string, object>> additionalLink in
-                    GetAdditionalLinks(source, context)
+                    GetAdditionalLinks(model, context)
                         .Where(kv => !string.IsNullOrWhiteSpace(kv.Key) && (kv.Value != null)))
                 {
                     AddLink(linksDto, additionalLink.Key, additionalLink.Value);
@@ -248,16 +248,16 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         /// <inheritdoc cref="MapAsync(TDto,TModel,TContext,System.Threading.CancellationToken)" />
         [NotNull]
         protected virtual Task OnMapAsync(
-            [NotNull] TDto source,
-            [NotNull] TModel destination,
+            [NotNull] TDto dto,
+            [NotNull] TModel model,
             [NotNull] TContext context,
             CancellationToken cancellationToken)
             => Task.CompletedTask;
 
         /// <summary>
-        ///     Calculates a unique <see cref="Uri" />, for the <paramref name="source" />
+        ///     Calculates a unique <see cref="Uri" />, for the <paramref name="model" />
         /// </summary>
-        /// <param name="source">The model for which we have to calculate a unique <see cref="Uri" /></param>
+        /// <param name="model">The model for which we have to calculate a unique <see cref="Uri" /></param>
         /// <param name="context">Context that can be used while mapping</param>
         /// <param name="route">Optional route, if rout is <c>null</c>, <see cref="Route"/> will be taken</param>
         /// <param name="routeParameters">Optional route-parameters, if rout-parameters is <c>null</c>, <see cref="GetRouteParameters"/> will be taken</param>
@@ -266,12 +266,12 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         /// </returns>
         [CanBeNull]
         protected Uri GetHref(
-            [NotNull] TModel source,
+            [NotNull] TModel model,
             [NotNull] TContext context,
             [CanBeNull] string route = null,
             [CanBeNull] IDictionary<string, object> routeParameters = null)
         {
-            routeParameters = routeParameters ?? GetRouteParameters(source, context);
+            routeParameters = routeParameters ?? GetRouteParameters(model, context);
             route = route ?? Route;
 
             if ((route != null) && (routeParameters != null))
@@ -299,7 +299,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         ///     <typeparamref name="TModel" />.
         /// </returns>
         [CanBeNull]
-        protected abstract IDictionary<string, object> GetRouteParameters([NotNull] TModel source, [NotNull] TContext context);
+        protected abstract IDictionary<string, object> GetRouteParameters([NotNull] TModel model, [NotNull] TContext context);
 
         /// <summary>
         ///     Creates a new model of type <typeparamref name="TModel" /> using our Data Transfer Object <paramref name="dto" />

@@ -29,52 +29,52 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         where TContext : MapperContext, new()
     {
         /// <inheritdoc />
-        public Task<TDto> MapAsync(TModel source, CancellationToken cancellationToken)
-            => MapAsync(source, new TContext(), cancellationToken);
+        public Task<TDto> MapAsync(TModel component, CancellationToken cancellationToken)
+            => MapAsync(component, new TContext(), cancellationToken);
 
         /// <inheritdoc />
-        public async Task<TDto> MapAsync(TModel source, TContext context, CancellationToken cancellationToken)
+        public async Task<TDto> MapAsync(TModel component, TContext context, CancellationToken cancellationToken)
         {
-            if (source == default(TModel))
+            if (component == default(TModel))
             {
                 return default;
             }
 
             TDto dto = CreateDto();
-            await MapAsync(source, dto, context, cancellationToken).ConfigureAwait(false);
+            await MapAsync(component, dto, context, cancellationToken).ConfigureAwait(false);
             return dto;
         }
 
         /// <inheritdoc />
-        public Task MapAsync(TModel source, TDto destination, CancellationToken cancellationToken)
-            => MapAsync(source, destination, new TContext(), cancellationToken);
+        public Task MapAsync(TModel component, TDto dto, CancellationToken cancellationToken)
+            => MapAsync(component, dto, new TContext(), cancellationToken);
 
         /// <inheritdoc />
         public abstract Task MapAsync(
-            TModel source,
-            TDto destination,
+            TModel component,
+            TDto dto,
             TContext context,
             CancellationToken cancellationToken);
 
         /// <inheritdoc />
-        public Task<TModel> MapAsync(TDto source, CancellationToken cancellationToken = default)
-            => MapAsync(source, new TContext(), cancellationToken);
+        public Task<TModel> MapAsync(TDto dto, CancellationToken cancellationToken = default)
+            => MapAsync(dto, new TContext(), cancellationToken);
 
         /// <inheritdoc />
-        public virtual Task<TModel> MapAsync(TDto source, TContext context, CancellationToken cancellationToken)
+        public virtual Task<TModel> MapAsync(TDto dto, TContext context, CancellationToken cancellationToken)
             => Task.FromResult(
-                source == null
+                dto == null
                     ? default
-                    : CreateModel(source, context));
+                    : CreateModel(dto, context));
 
         /// <inheritdoc />
-        public Task MapAsync(TDto source, TModel destination, CancellationToken cancellationToken = default)
-            => MapAsync(source, destination, new TContext(), cancellationToken);
+        public Task MapAsync(TDto dto, TModel component, CancellationToken cancellationToken = default)
+            => MapAsync(dto, component, new TContext(), cancellationToken);
 
         /// <inheritdoc />
         public virtual Task MapAsync(
-            TDto source,
-            TModel destination,
+            TDto dto,
+            TModel component,
             TContext context,
             CancellationToken cancellationToken)
             => throw new InternalProgrammingError($"{nameof(ComponentMapper<TModel, TDto, TContext>)} doesn't support mapping from {nameof(TDto)} to {nameof(TModel)}.");

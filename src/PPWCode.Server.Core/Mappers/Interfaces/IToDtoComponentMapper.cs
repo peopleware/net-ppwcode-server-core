@@ -39,45 +39,45 @@ namespace PPWCode.Server.Core.Mappers.Interfaces
         ///     Convert an object of type <typeparamref name="TComponent" /> to a new created object of type
         ///     <typeparamref name="TDto" />.
         /// </summary>
-        /// <param name="source">Object to be converted</param>
+        /// <param name="component">Object to be converted</param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
         /// <returns>The converted object of type <typeparamref name="TDto" /></returns>
         [NotNull]
         [ItemCanBeNull]
-        Task<TDto> MapAsync([CanBeNull] TComponent source, CancellationToken cancellationToken = default);
+        Task<TDto> MapAsync([CanBeNull] TComponent component, CancellationToken cancellationToken = default);
 
         /// <summary>
         ///     Convert an object of type <typeparamref name="TComponent" /> to a new created object of type
         ///     <typeparamref name="TDto" />.
         /// </summary>
-        /// <param name="source">Object to be converted</param>
+        /// <param name="component">Object to be converted</param>
         /// <param name="context">Optional context of type <typeparamref name="TContext" /></param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
         /// <returns>The converted object of type <typeparamref name="TDto" /></returns>
         [NotNull]
         [ItemCanBeNull]
-        Task<TDto> MapAsync([CanBeNull] TComponent source, [NotNull] TContext context, CancellationToken cancellationToken = default);
+        Task<TDto> MapAsync([CanBeNull] TComponent component, [NotNull] TContext context, CancellationToken cancellationToken = default);
 
         /// <summary>
         ///     Convert an object of type <typeparamref name="TComponent" /> into an object of type <typeparamref name="TDto" />.
         /// </summary>
-        /// <param name="source">Object to be converted</param>
-        /// <param name="destination">Converted object</param>
+        /// <param name="component">Object to be converted</param>
+        /// <param name="dto">Converted object</param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
         [NotNull]
-        Task MapAsync([NotNull] TComponent source, [NotNull] TDto destination, CancellationToken cancellationToken = default);
+        Task MapAsync([NotNull] TComponent component, [NotNull] TDto dto, CancellationToken cancellationToken = default);
 
         /// <summary>
         ///     Convert an object of type <typeparamref name="TComponent" /> into an object of type <typeparamref name="TDto" />.
         /// </summary>
-        /// <param name="source">Object to be converted</param>
-        /// <param name="destination">Converted object</param>
+        /// <param name="component">Object to be converted</param>
+        /// <param name="dto">Converted object</param>
         /// <param name="context">Context that can be used while mapping</param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
         [NotNull]
         Task MapAsync(
-            [NotNull] TComponent source,
-            [NotNull] TDto destination,
+            [NotNull] TComponent component,
+            [NotNull] TDto dto,
             [NotNull] TContext context,
             CancellationToken cancellationToken = default);
     }

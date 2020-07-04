@@ -56,7 +56,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
 
         /// <inheritdoc />
         [ContractAnnotation("=> halt")]
-        protected sealed override Task OnMapAsync(TModel source, TDto destination, TContext context, CancellationToken cancellationToken)
+        protected sealed override Task OnMapAsync(TModel model, TDto dto, TContext context, CancellationToken cancellationToken)
             => throw new InternalProgrammingError($"Mapping from {typeof(TModel).FullName} to {typeof(TDto).FullName} isn't supported.");
 
         /// <inheritdoc />
