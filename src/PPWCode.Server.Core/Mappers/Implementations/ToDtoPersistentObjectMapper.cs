@@ -43,7 +43,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
 
         /// <inheritdoc />
         [ContractAnnotation("=> halt")]
-        protected override Task OnMapAsync(
+        protected sealed override Task OnMapAsync(
             TDto source,
             TModel destination,
             TContext context,
@@ -52,7 +52,7 @@ namespace PPWCode.Server.Core.Mappers.Implementations
 
         /// <inheritdoc />
         [ContractAnnotation("=> halt")]
-        protected override Task<TModel> FetchOrCreateModelAsync(TDto dto, TContext context, CancellationToken cancellationToken)
+        protected sealed override Task<TModel> FetchOrCreateModelAsync(TDto dto, TContext context, CancellationToken cancellationToken)
             => throw new InternalProgrammingError($"Creating a model of type {typeof(TModel).FullName} from {typeof(TDto).FullName} isn't supported.");
 
         /// <inheritdoc />
