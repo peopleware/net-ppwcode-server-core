@@ -10,7 +10,6 @@
 // limitations under the License.
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 using Castle.Core.Logging;
@@ -59,6 +58,8 @@ namespace PPWCode.Server.Core.API
         /// <typeparam name="TContext">Type of an optional context.</typeparam>
         /// <param name="pagedModels">A paged list of <typeparamref name="TModel"></typeparamref>.</param>
         /// <param name="itemMapper">A mapper that can convert a model to dto.</param>
+        /// <param name="context">Optional mapping context.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
         /// <result>
         ///     A <see cref="IPagedList{TModel}" />, where <c>T</c> is equal to <typeparamref name="TModel" />.
         /// </result>
@@ -67,14 +68,13 @@ namespace PPWCode.Server.Core.API
         protected virtual async Task<PagedList<TDto>> MapPagedListAsync<TModel, TIdentity, TDto, TContext>(
             [NotNull] IPagedList<TModel> pagedModels,
             [NotNull] IToDtoPersistentObjectMapper<TModel, TIdentity, TDto, TContext> itemMapper,
-            [CanBeNull] TContext context = null,
-            CancellationToken cancellationToken = default)
+            [CanBeNull] TContext context = null)
             where TModel : IPersistentObject<TIdentity>
             where TIdentity : struct, IEquatable<TIdentity>
             where TDto : class, IPersistentDto<TIdentity>
             where TContext : MapperContext, new()
             => new PagedList<TDto>(
-                await itemMapper.MapAsync(pagedModels.Items, context ?? new TContext(), cancellationToken),
+                await itemMapper.MapAsync(pagedModels.Items, context ?? new TContext(), HttpContext.RequestAborted),
                 pagedModels.PageIndex,
                 pagedModels.PageSize,
                 pagedModels.TotalCount);
