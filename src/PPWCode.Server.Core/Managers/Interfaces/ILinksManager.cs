@@ -10,6 +10,9 @@
 // limitations under the License.
 
 using System;
+using System.Collections.Generic;
+
+using JetBrains.Annotations;
 
 using PPWCode.API.Core;
 using PPWCode.Server.Core.Managers.Implementations;
@@ -27,7 +30,7 @@ namespace PPWCode.Server.Core.Managers.Interfaces
     /// <typeparam name="TContext">Type of an optional context</typeparam>
     public interface ILinksManager<in TModel, TIdentity, in TDto, in TContext> : IManager
         where TIdentity : struct, IEquatable<TIdentity>
-        where TModel : class, IPersistentObject<TIdentity>
+        where TModel : IPersistentObject<TIdentity>
         where TDto : class, ILinksDto<TIdentity>
         where TContext : LinksContext, new()
     {
@@ -41,10 +44,31 @@ namespace PPWCode.Server.Core.Managers.Interfaces
         ///     After the initialization, <see cref="ILinksDto{TIdentity}.Links" /> and/or
         ///     <see cref="ILinksDto{TIdentity}.HRef" /> can be <c>null</c>.
         /// </remarks>
-        void Initialize(TModel model, TDto dto);
+        void Initialize([NotNull] TModel model, [NotNull] TDto dto);
 
         /// <inheritdoc cref="Initialize(TModel,TDto)" />
         /// <param name="context">Optional context that can be used as additional data provider.</param>
-        void Initialize(TModel model, TDto dto, TContext context);
+        void Initialize([NotNull] TModel model, [NotNull] TDto dto, [NotNull] TContext context);
+
+        /// <summary>
+        ///     Initialize the <see cref="ILinksDto{TIdentity}.Links" /> and <see cref="ILinksDto{TIdentity}.HRef" />
+        ///     members of the <paramref name="dtos" /> input.
+        /// </summary>
+        /// <param name="models">The models that can be used as data provider to buildup the links.</param>
+        /// <param name="dtos">The Dto's that will be initialized.</param>
+        /// <remarks>
+        ///     <para>
+        ///         After the initialization, <see cref="ILinksDto{TIdentity}.Links" /> and/or
+        ///         <see cref="ILinksDto{TIdentity}.HRef" /> can be <c>null</c>.
+        ///     </para>
+        ///     <para>
+        ///         The <paramref name="dtos" /> and <paramref name="models" /> should be aligned.
+        ///     </para>
+        /// </remarks>
+        void Initialize([NotNull] [ItemNotNull] IEnumerable<TModel> models, [NotNull] [ItemNotNull] IEnumerable<TDto> dtos);
+
+        /// <inheritdoc cref="Initialize(System.Collections.Generic.IEnumerable{TModel},System.Collections.Generic.IEnumerable{TDto})" />
+        /// <param name="context">Optional context that can be used as additional data provider.</param>
+        void Initialize([NotNull] [ItemNotNull] IEnumerable<TModel> models, [NotNull] [ItemNotNull] IEnumerable<TDto> dtos, [NotNull] TContext context);
     }
 }

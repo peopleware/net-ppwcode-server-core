@@ -19,6 +19,8 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 
 using PPWCode.API.Core;
+using PPWCode.Server.Core.Managers.Implementations;
+using PPWCode.Server.Core.Managers.Interfaces;
 using PPWCode.Server.Core.Mappers;
 using PPWCode.Server.Core.Mappers.Interfaces;
 using PPWCode.Vernacular.Persistence.IV;
@@ -55,7 +57,7 @@ namespace PPWCode.Server.Core.API
         /// <typeparam name="TModel">Type of our model.</typeparam>
         /// <typeparam name="TIdentity">Type of identity used by <typeparamref name="TModel" />.</typeparam>
         /// <typeparam name="TDto">Type of our dto.</typeparam>
-        /// <typeparam name="TContext">Type of an optional context.</typeparam>
+        /// <typeparam name="TContext">Type of an optional context while mapping.</typeparam>
         /// <param name="pagedModels">A paged list of <typeparamref name="TModel"></typeparamref>.</param>
         /// <param name="itemMapper">A mapper that can convert a model to dto.</param>
         /// <param name="context">Optional mapping context.</param>
@@ -78,5 +80,48 @@ namespace PPWCode.Server.Core.API
                 pagedModels.PageIndex,
                 pagedModels.PageSize,
                 pagedModels.TotalCount);
+
+        /// <summary>
+        ///     Converts a <see cref="IPagedList{TModel}" />, where <c>T</c> is equal to <typeparamref name="TModel" />, to a
+        ///     <see cref="PagedList{TDto}" /> using the mapper <paramref name="itemMapper" />, where <c>T</c> is equal to
+        ///     <typeparamref name="TDto" />.
+        /// </summary>
+        /// <typeparam name="TModel">Type of our model.</typeparam>
+        /// <typeparam name="TIdentity">Type of identity used by <typeparamref name="TModel" />.</typeparam>
+        /// <typeparam name="TDto">Type of our dto.</typeparam>
+        /// <typeparam name="TMapperContext">Type of an optional context while mapping.</typeparam>
+        /// <typeparam name="TLinksContext">Type of an optional context while initializing links.</typeparam>
+        /// <param name="pagedModels">A paged list of <typeparamref name="TModel"></typeparamref>.</param>
+        /// <param name="itemMapper">A mapper that can convert a model to dto.</param>
+        /// <param name="context">Optional mapping context.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
+        /// <result>
+        ///     A <see cref="IPagedList{TModel}" />, where <c>T</c> is equal to <typeparamref name="TModel" />.
+        /// </result>
+        /// <remarks>
+        ///     The links are also initialized while converting, using the <paramref name="linksManager" />.
+        /// </remarks>
+        [NotNull]
+        [ItemNotNull]
+        protected virtual async Task<PagedList<TDto>> MapPagedListAsync<TModel, TIdentity, TDto, TMapperContext, TLinksContext>(
+            [NotNull] IPagedList<TModel> pagedModels,
+            [NotNull] IToDtoPersistentObjectMapper<TModel, TIdentity, TDto, TMapperContext> itemMapper,
+            [NotNull] ILinksManager<TModel, TIdentity, TDto, TLinksContext> linksManager,
+            [CanBeNull] TMapperContext mapperContext = null,
+            [CanBeNull] TLinksContext linksContext = null)
+            where TModel : IPersistentObject<TIdentity>
+            where TIdentity : struct, IEquatable<TIdentity>
+            where TDto : class, ILinksDto<TIdentity>
+            where TMapperContext : MapperContext, new()
+            where TLinksContext : LinksContext, new()
+        {
+            TDto[] dtos = await itemMapper.MapAsync(pagedModels.Items, mapperContext ?? new TMapperContext(), HttpContext.RequestAborted);
+            linksManager.Initialize(pagedModels.Items, dtos, linksContext ?? new TLinksContext());
+            return new PagedList<TDto>(
+                dtos,
+                pagedModels.PageIndex,
+                pagedModels.PageSize,
+                pagedModels.TotalCount);
+        }
     }
 }

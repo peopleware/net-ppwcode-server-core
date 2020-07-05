@@ -16,6 +16,7 @@ using System.Linq;
 using JetBrains.Annotations;
 
 using PPWCode.API.Core;
+using PPWCode.API.Core.Exceptions;
 using PPWCode.Server.Core.Managers.Interfaces;
 using PPWCode.Server.Core.RequestContext.Interfaces;
 using PPWCode.Vernacular.Persistence.IV;
@@ -27,7 +28,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
         : Manager,
           ILinksManager<TModel, TIdentity, TDto, TContext>
         where TIdentity : struct, IEquatable<TIdentity>
-        where TModel : class, IPersistentObject<TIdentity>
+        where TModel : IPersistentObject<TIdentity>
         where TDto : class, ILinksDto<TIdentity>
         where TContext : LinksContext, new()
     {
@@ -77,6 +78,28 @@ namespace PPWCode.Server.Core.Managers.Implementations
                     .Where(kv => !string.IsNullOrWhiteSpace(kv.Key) && (kv.Value != null)))
             {
                 AddLink(dto, additionalLink.Key, additionalLink.Value);
+            }
+        }
+
+        /// <inheritdoc />
+        public void Initialize(IEnumerable<TModel> models, IEnumerable<TDto> dtos)
+            => Initialize(models, dtos, new TContext());
+
+        /// <inheritdoc />
+        public void Initialize(IEnumerable<TModel> models, IEnumerable<TDto> dtos, TContext context)
+        {
+            using (IEnumerator<TModel> modelEnumerator = models.GetEnumerator())
+            {
+                foreach (TDto dto in dtos)
+                {
+                    modelEnumerator.MoveNext();
+                    if (modelEnumerator.Current == null)
+                    {
+                        throw new InternalProgrammingError($"Expected that {nameof(dtos)} and {nameof(models)} are aligned.");
+                    }
+
+                    Initialize(modelEnumerator.Current, dto, context);
+                }
             }
         }
 
