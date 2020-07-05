@@ -44,11 +44,11 @@ namespace PPWCode.Server.Core.Managers.Interfaces
         ///     After the initialization, <see cref="ILinksDto{TIdentity}.Links" /> and/or
         ///     <see cref="ILinksDto{TIdentity}.HRef" /> can be <c>null</c>.
         /// </remarks>
-        void Initialize([NotNull] TModel model, [NotNull] TDto dto);
+        void Initialize([CanBeNull] TModel model, [CanBeNull] TDto dto);
 
         /// <inheritdoc cref="Initialize(TModel,TDto)" />
         /// <param name="context">Optional context that can be used as additional data provider.</param>
-        void Initialize([NotNull] TModel model, [NotNull] TDto dto, [NotNull] TContext context);
+        void Initialize([CanBeNull] TModel model, [CanBeNull] TDto dto, [NotNull] TContext context);
 
         /// <summary>
         ///     Initialize the <see cref="ILinksDto{TIdentity}.Links" /> and <see cref="ILinksDto{TIdentity}.HRef" />

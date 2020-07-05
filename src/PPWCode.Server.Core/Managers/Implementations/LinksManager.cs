@@ -66,6 +66,11 @@ namespace PPWCode.Server.Core.Managers.Implementations
         /// <inheritdoc />
         public void Initialize(TModel model, TDto dto, TContext context)
         {
+            if ((model == null) || (dto == null))
+            {
+                return;
+            }
+
             Uri href = GetHref(model, context);
             if (href != null)
             {
