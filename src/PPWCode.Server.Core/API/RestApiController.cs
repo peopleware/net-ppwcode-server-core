@@ -111,7 +111,7 @@ namespace PPWCode.Server.Core.API
             [CanBeNull] TLinksContext linksContext = null)
             where TModel : IPersistentObject<TIdentity>
             where TIdentity : struct, IEquatable<TIdentity>
-            where TDto : class, ILinksDto<TIdentity>
+            where TDto : class, ILinksDto, IPersistentDto<TIdentity>
             where TMapperContext : MapperContext, new()
             where TLinksContext : LinksContext, new()
         {

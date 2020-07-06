@@ -29,7 +29,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
           ILinksManager<TModel, TIdentity, TDto, TContext>
         where TIdentity : struct, IEquatable<TIdentity>
         where TModel : IPersistentObject<TIdentity>
-        where TDto : class, ILinksDto<TIdentity>
+        where TDto : class, ILinksDto
         where TContext : LinksContext, new()
     {
         protected LinksManager([NotNull] IRequestContext requestContext)
@@ -122,9 +122,9 @@ namespace PPWCode.Server.Core.Managers.Implementations
         protected abstract IDictionary<string, object> GetRouteParameters([NotNull] TModel model, [NotNull] TContext context);
 
         /// <summary>
-        ///     Add a new link to <see cref="ILinksDto{TIdentity}.Links" />.
+        ///     Add a new link to <see cref="ILinksDto.Links" />.
         /// </summary>
-        /// <param name="dto">Dto that contains a member <see cref="ILinksDto{TIdentity}.Links" /></param>
+        /// <param name="dto">Dto that contains a member <see cref="ILinksDto.Links" /></param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
         /// <param name="key">Key of the link</param>
         /// <param name="href">Link itself</param>
@@ -150,7 +150,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
         }
 
         /// <summary>
-        ///     The possibility to enrich the <see cref="ILinksDto{TIdentity}.Links" /> list.
+        ///     The possibility to enrich the <see cref="ILinksDto.Links" /> list.
         /// </summary>
         /// <param name="source">The model</param>
         /// <param name="context">Context that can be used while mapping.</param>

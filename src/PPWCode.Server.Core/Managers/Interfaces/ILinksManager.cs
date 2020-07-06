@@ -21,28 +21,28 @@ using PPWCode.Vernacular.Persistence.IV;
 namespace PPWCode.Server.Core.Managers.Interfaces
 {
     /// <summary>
-    ///     Initialize the <see cref="ILinksDto{TIdentity}.Links" /> and <see cref="ILinksDto{TIdentity}.HRef" />
+    ///     Initialize the <see cref="ILinksDto.Links" /> and <see cref="ILinksDto.HRef" />
     ///     members in a given Dto of type <typeparamref name="TDto" />.
     /// </summary>
     /// <typeparam name="TModel">A model of <see cref="IPersistentObject{T}" />.</typeparam>
     /// <typeparam name="TIdentity">Type of identity used by <typeparamref name="TModel" /></typeparam>
-    /// <typeparam name="TDto">A data transfer object of <see cref="ILinksDto{TIdentity}" /></typeparam>
+    /// <typeparam name="TDto">A data transfer object of <see cref="ILinksDto" /></typeparam>
     /// <typeparam name="TContext">Type of an optional context</typeparam>
     public interface ILinksManager<in TModel, TIdentity, in TDto, in TContext> : IManager
         where TIdentity : struct, IEquatable<TIdentity>
         where TModel : IPersistentObject<TIdentity>
-        where TDto : class, ILinksDto<TIdentity>
+        where TDto : class, ILinksDto
         where TContext : LinksContext, new()
     {
         /// <summary>
-        ///     Initialize the <see cref="ILinksDto{TIdentity}.Links" /> and <see cref="ILinksDto{TIdentity}.HRef" />
+        ///     Initialize the <see cref="ILinksDto.Links" /> and <see cref="ILinksDto.HRef" />
         ///     members of the <paramref name="dto" /> input.
         /// </summary>
         /// <param name="model">The model that can be used as data provider to buildup the links.</param>
         /// <param name="dto">The Dto that will be initialized.</param>
         /// <remarks>
-        ///     After the initialization, <see cref="ILinksDto{TIdentity}.Links" /> and/or
-        ///     <see cref="ILinksDto{TIdentity}.HRef" /> can be <c>null</c>.
+        ///     After the initialization, <see cref="ILinksDto.Links" /> and/or
+        ///     <see cref="ILinksDto.HRef" /> can be <c>null</c>.
         /// </remarks>
         void Initialize([CanBeNull] TModel model, [CanBeNull] TDto dto);
 
@@ -51,15 +51,15 @@ namespace PPWCode.Server.Core.Managers.Interfaces
         void Initialize([CanBeNull] TModel model, [CanBeNull] TDto dto, [NotNull] TContext context);
 
         /// <summary>
-        ///     Initialize the <see cref="ILinksDto{TIdentity}.Links" /> and <see cref="ILinksDto{TIdentity}.HRef" />
+        ///     Initialize the <see cref="ILinksDto.Links" /> and <see cref="ILinksDto.HRef" />
         ///     members of the <paramref name="dtos" /> input.
         /// </summary>
         /// <param name="models">The models that can be used as data provider to buildup the links.</param>
         /// <param name="dtos">The Dto's that will be initialized.</param>
         /// <remarks>
         ///     <para>
-        ///         After the initialization, <see cref="ILinksDto{TIdentity}.Links" /> and/or
-        ///         <see cref="ILinksDto{TIdentity}.HRef" /> can be <c>null</c>.
+        ///         After the initialization, <see cref="ILinksDto.Links" /> and/or
+        ///         <see cref="ILinksDto.HRef" /> can be <c>null</c>.
         ///     </para>
         ///     <para>
         ///         The <paramref name="dtos" /> and <paramref name="models" /> should be aligned.
