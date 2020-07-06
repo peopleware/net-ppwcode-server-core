@@ -41,11 +41,11 @@ namespace PPWCode.Server.Core.Managers.Implementations
         public IRequestContext RequestContext { get; }
 
         /// <summary>
-        ///     The <see cref="Route" /> together with the member <see cref="GetRouteParameters" /> is being used to calculate a
+        ///     The <see cref="SelfRoute" /> together with the member <see cref="GetSelfRouteParameters" /> is being used to calculate a
         ///     unique <see cref="Uri" /> to our resource of type <typeparamref name="TModel" />.
         /// </summary>
         [CanBeNull]
-        protected abstract string Route { get; }
+        protected abstract string SelfRoute { get; }
 
         /// <summary>
         ///     Name of self for entry in Links.
@@ -119,7 +119,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
         ///     <typeparamref name="TModel" />.
         /// </returns>
         [CanBeNull]
-        protected abstract IDictionary<string, object> GetRouteParameters([NotNull] TModel model, [NotNull] TContext context);
+        protected abstract IDictionary<string, object> GetSelfRouteParameters([NotNull] TModel model, [NotNull] TContext context);
 
         /// <summary>
         ///     Add a new link to <see cref="ILinksDto.Links" />.
@@ -168,10 +168,10 @@ namespace PPWCode.Server.Core.Managers.Implementations
         /// </summary>
         /// <param name="model">The model for which we have to calculate a unique <see cref="Uri" /></param>
         /// <param name="context">Context that can be used while mapping</param>
-        /// <param name="route">Optional route, if rout is <c>null</c>, <see cref="Route" /> will be taken</param>
+        /// <param name="route">Optional route, if rout is <c>null</c>, <see cref="SelfRoute" /> will be taken</param>
         /// <param name="routeParameters">
         ///     Optional route-parameters, if rout-parameters is <c>null</c>,
-        ///     <see cref="GetRouteParameters" /> will be taken
+        ///     <see cref="GetSelfRouteParameters" /> will be taken
         /// </param>
         /// <returns>
         ///     A unique <see cref="Uri" />, based on <paramref name="route" /> and <paramref name="routeParameters" />.
@@ -183,8 +183,8 @@ namespace PPWCode.Server.Core.Managers.Implementations
             [CanBeNull] string route = null,
             [CanBeNull] IDictionary<string, object> routeParameters = null)
         {
-            routeParameters = routeParameters ?? GetRouteParameters(model, context);
-            route = route ?? Route;
+            routeParameters = routeParameters ?? GetSelfRouteParameters(model, context);
+            route = route ?? SelfRoute;
 
             if ((route != null) && (routeParameters != null))
             {
