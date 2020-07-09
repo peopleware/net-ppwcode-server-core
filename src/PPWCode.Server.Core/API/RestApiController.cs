@@ -106,10 +106,10 @@ namespace PPWCode.Server.Core.API
         protected virtual async Task<PagedList<TDto>> MapPagedListAsync<TModel, TIdentity, TDto, TMapperContext, TLinksContext>(
             [NotNull] IPagedList<TModel> pagedModels,
             [NotNull] IToDtoPersistentObjectMapper<TModel, TIdentity, TDto, TMapperContext> itemMapper,
-            [NotNull] ILinksManager<TModel, TIdentity, TDto, TLinksContext> linksManager,
+            [NotNull] ILinksManager<TModel, TDto, TLinksContext> linksManager,
             [CanBeNull] TMapperContext mapperContext = null,
             [CanBeNull] TLinksContext linksContext = null)
-            where TModel : IPersistentObject<TIdentity>
+            where TModel : class, IPersistentObject<TIdentity>
             where TIdentity : struct, IEquatable<TIdentity>
             where TDto : class, ILinksDto, IPersistentDto<TIdentity>
             where TMapperContext : MapperContext, new()
