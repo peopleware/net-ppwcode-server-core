@@ -74,7 +74,7 @@ namespace PPWCode.Server.Core.Managers.Interfaces
     /// </summary>
     /// <typeparam name="TLinksDto">A data transfer object of <see cref="ILinksDto" /></typeparam>
     /// <typeparam name="TContext">Type of an optional context</typeparam>
-    public interface ILinksManager<in TLinksDto, in TContext>
+    public interface ILinksManager<in TLinksDto, in TContext> : IManager
         where TLinksDto : ILinksDto
         where TContext : LinksContext, new()
     {
