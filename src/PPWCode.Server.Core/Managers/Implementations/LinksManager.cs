@@ -19,16 +19,14 @@ using PPWCode.API.Core;
 using PPWCode.API.Core.Exceptions;
 using PPWCode.Server.Core.Managers.Interfaces;
 using PPWCode.Server.Core.RequestContext.Interfaces;
-using PPWCode.Vernacular.Persistence.IV;
 
 namespace PPWCode.Server.Core.Managers.Implementations
 {
-    /// <inheritdoc cref="ILinksManager{TModel,TIdentity,TDto,TContext}" />
-    public abstract class LinksManager<TModel, TIdentity, TDto, TContext>
+    /// <inheritdoc cref="ILinksManager{TModel,TDto,TContext}" />
+    public abstract class LinksManager<TModel, TDto, TContext>
         : Manager,
-          ILinksManager<TModel, TIdentity, TDto, TContext>
-        where TIdentity : struct, IEquatable<TIdentity>
-        where TModel : IPersistentObject<TIdentity>
+          ILinksManager<TModel, TDto, TContext>
+        where TModel : class
         where TDto : class, ILinksDto
         where TContext : LinksContext, new()
     {
@@ -39,25 +37,6 @@ namespace PPWCode.Server.Core.Managers.Implementations
 
         [NotNull]
         public IRequestContext RequestContext { get; }
-
-        /// <summary>
-        ///     The <see cref="SelfRoute" /> together with the member <see cref="GetSelfRouteParameters" /> is being used to calculate a
-        ///     unique <see cref="Uri" /> to our resource of type <typeparamref name="TModel" />.
-        /// </summary>
-        [CanBeNull]
-        protected abstract string SelfRoute { get; }
-
-        /// <summary>
-        ///     Name of self for entry in Links.
-        /// </summary>
-        protected virtual string SelfKey
-            => "self";
-
-        /// <summary>
-        ///     Name of href for entry in Links.
-        /// </summary>
-        protected virtual string HRefKey
-            => "href";
 
         /// <inheritdoc />
         public void Initialize(TModel model, TDto dto)
@@ -109,6 +88,26 @@ namespace PPWCode.Server.Core.Managers.Implementations
         }
 
         /// <summary>
+        ///     Name of self for entry in Links.
+        /// </summary>
+        protected virtual string SelfKey
+            => "self";
+
+        /// <summary>
+        ///     Name of href for entry in Links.
+        /// </summary>
+        protected virtual string HRefKey
+            => "href";
+
+        /// <summary>
+        ///     The <see cref="SelfRoute" /> together with the member <see cref="GetSelfRouteParameters" /> is being used to calculate a
+        ///     unique <see cref="Uri" /> to our resource of type <typeparamref name="TModel" />.
+        /// </summary>
+        [CanBeNull]
+        protected virtual string SelfRoute
+            => null;
+
+        /// <summary>
         ///     Returns all identifiers that are necessary to calculate a unique <see cref="Uri" /> to our resource of type
         ///     <typeparamref name="TModel" />.
         /// </summary>
@@ -119,49 +118,8 @@ namespace PPWCode.Server.Core.Managers.Implementations
         ///     <typeparamref name="TModel" />.
         /// </returns>
         [CanBeNull]
-        protected abstract IDictionary<string, object> GetSelfRouteParameters([NotNull] TModel model, [NotNull] TContext context);
-
-        /// <summary>
-        ///     Add a new link to <see cref="ILinksDto.Links" />.
-        /// </summary>
-        /// <param name="dto">Dto that contains a member <see cref="ILinksDto.Links" /></param>
-        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
-        /// <param name="key">Key of the link</param>
-        /// <param name="href">Link itself</param>
-        /// <remarks>A key can be added, if the key is not already exists as link and the reference is not null.</remarks>
-        /// <result>If they is added, it will return true.</result>
-        protected virtual bool AddLink(
-            [NotNull] TDto dto,
-            [NotNull] string key,
-            [NotNull] IDictionary<string, object> value)
-        {
-            if (dto.Links == null)
-            {
-                dto.Links = new Dictionary<string, IDictionary<string, object>>();
-            }
-
-            if (!dto.Links.ContainsKey(key))
-            {
-                dto.Links.Add(key, value);
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        ///     The possibility to enrich the <see cref="ILinksDto.Links" /> list.
-        /// </summary>
-        /// <param name="source">The model</param>
-        /// <param name="context">Context that can be used while mapping.</param>
-        /// <returns>List of key / href pairs, to be added to our Links dictionary.</returns>
-        [NotNull]
-        protected virtual IEnumerable<KeyValuePair<string, IDictionary<string, object>>> GetAdditionalLinks(
-            [NotNull] TModel model,
-            [NotNull] TContext context)
-        {
-            yield break;
-        }
+        protected virtual IDictionary<string, object> GetSelfRouteParameters([NotNull] TModel model, [NotNull] TContext context)
+            => null;
 
         /// <summary>
         ///     Calculates a unique <see cref="Uri" />, for the <paramref name="model" />
@@ -194,6 +152,48 @@ namespace PPWCode.Server.Core.Managers.Implementations
             }
 
             return null;
+        }
+
+        /// <summary>
+        ///     Add a new link to <see cref="ILinksDto.Links" />.
+        /// </summary>
+        /// <param name="dto">Dto that contains a member <see cref="ILinksDto.Links" /></param>
+        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
+        /// <param name="key">Key of the link</param>
+        /// <param name="href">Link itself</param>
+        /// <remarks>A key can be added, if the key is not already exists as link and the reference is not null.</remarks>
+        /// <result>If they is added, it will return true.</result>
+        protected virtual bool AddLink(
+            [NotNull] TDto dto,
+            [NotNull] string key,
+            [NotNull] IDictionary<string, object> value)
+        {
+            if ((dto.Links == null) || !dto.Links.ContainsKey(key))
+            {
+                if (dto.Links == null)
+                {
+                    dto.Links = new Dictionary<string, IDictionary<string, object>>();
+                }
+
+                dto.Links.Add(key, value);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        ///     The possibility to enrich the <see cref="ILinksDto.Links" /> list.
+        /// </summary>
+        /// <param name="source">The model</param>
+        /// <param name="context">Context that can be used while mapping.</param>
+        /// <returns>List of key / href pairs, to be added to our Links dictionary.</returns>
+        [NotNull]
+        protected virtual IEnumerable<KeyValuePair<string, IDictionary<string, object>>> GetAdditionalLinks(
+            [NotNull] TModel model,
+            [NotNull] TContext context)
+        {
+            yield break;
         }
     }
 }

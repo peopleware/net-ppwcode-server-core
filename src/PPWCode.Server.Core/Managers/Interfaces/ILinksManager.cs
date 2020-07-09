@@ -9,7 +9,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Collections.Generic;
 
 using JetBrains.Annotations;
@@ -25,12 +24,10 @@ namespace PPWCode.Server.Core.Managers.Interfaces
     ///     members in a given Dto of type <typeparamref name="TDto" />.
     /// </summary>
     /// <typeparam name="TModel">A model of <see cref="IPersistentObject{T}" />.</typeparam>
-    /// <typeparam name="TIdentity">Type of identity used by <typeparamref name="TModel" /></typeparam>
     /// <typeparam name="TDto">A data transfer object of <see cref="ILinksDto" /></typeparam>
     /// <typeparam name="TContext">Type of an optional context</typeparam>
-    public interface ILinksManager<in TModel, TIdentity, in TDto, in TContext> : IManager
-        where TIdentity : struct, IEquatable<TIdentity>
-        where TModel : IPersistentObject<TIdentity>
+    public interface ILinksManager<in TModel, in TDto, in TContext> : IManager
+        where TModel : class
         where TDto : class, ILinksDto
         where TContext : LinksContext, new()
     {
