@@ -15,43 +15,41 @@ using JetBrains.Annotations;
 
 using PPWCode.API.Core;
 using PPWCode.Server.Core.Managers.Implementations;
-using PPWCode.Vernacular.Persistence.IV;
 
 namespace PPWCode.Server.Core.Managers.Interfaces
 {
     /// <summary>
     ///     Initialize the <see cref="ILinksDto.Links" /> and <see cref="ILinksDto.HRef" />
-    ///     members in a given Dto of type <typeparamref name="TDto" />.
+    ///     members in a given Dto of type <typeparamref name="TLinksDto" />.
     /// </summary>
-    /// <typeparam name="TModel">A model of <see cref="IPersistentObject{T}" />.</typeparam>
-    /// <typeparam name="TDto">A data transfer object of <see cref="ILinksDto" /></typeparam>
+    /// <typeparam name="TSource">A source object where we can find needed data for generating our links.</typeparam>
+    /// <typeparam name="TLinksDto">A data transfer object of <see cref="ILinksDto" /></typeparam>
     /// <typeparam name="TContext">Type of an optional context</typeparam>
-    public interface ILinksManager<in TModel, in TDto, in TContext> : IManager
-        where TModel : class
-        where TDto : class, ILinksDto
+    public interface ILinksManager<in TSource, in TLinksDto, in TContext> : IManager
+        where TLinksDto : ILinksDto
         where TContext : LinksContext, new()
     {
         /// <summary>
         ///     Initialize the <see cref="ILinksDto.Links" /> and <see cref="ILinksDto.HRef" />
         ///     members of the <paramref name="dto" /> input.
         /// </summary>
-        /// <param name="model">The model that can be used as data provider to buildup the links.</param>
+        /// <param name="source">The source where we extract our information</param>
         /// <param name="dto">The Dto that will be initialized.</param>
         /// <remarks>
         ///     After the initialization, <see cref="ILinksDto.Links" /> and/or
         ///     <see cref="ILinksDto.HRef" /> can be <c>null</c>.
         /// </remarks>
-        void Initialize([CanBeNull] TModel model, [CanBeNull] TDto dto);
+        void Initialize([CanBeNull] TSource source, [CanBeNull] TLinksDto dto);
 
-        /// <inheritdoc cref="Initialize(TModel,TDto)" />
+        /// <inheritdoc cref="Initialize(TSource,TLinksDto)" />
         /// <param name="context">Optional context that can be used as additional data provider.</param>
-        void Initialize([CanBeNull] TModel model, [CanBeNull] TDto dto, [NotNull] TContext context);
+        void Initialize([CanBeNull] TSource source, [CanBeNull] TLinksDto dto, [NotNull] TContext context);
 
         /// <summary>
         ///     Initialize the <see cref="ILinksDto.Links" /> and <see cref="ILinksDto.HRef" />
         ///     members of the <paramref name="dtos" /> input.
         /// </summary>
-        /// <param name="models">The models that can be used as data provider to buildup the links.</param>
+        /// <param name="sources">The sources that can be used as data provider to buildup the links.</param>
         /// <param name="dtos">The Dto's that will be initialized.</param>
         /// <remarks>
         ///     <para>
@@ -59,13 +57,56 @@ namespace PPWCode.Server.Core.Managers.Interfaces
         ///         <see cref="ILinksDto.HRef" /> can be <c>null</c>.
         ///     </para>
         ///     <para>
-        ///         The <paramref name="dtos" /> and <paramref name="models" /> should be aligned.
+        ///         The <paramref name="dtos" /> and <paramref name="sources" /> should be aligned.
         ///     </para>
         /// </remarks>
-        void Initialize([NotNull] [ItemNotNull] IEnumerable<TModel> models, [NotNull] [ItemNotNull] IEnumerable<TDto> dtos);
+        void Initialize([NotNull] [ItemNotNull] IEnumerable<TSource> sources, [NotNull] [ItemNotNull] IEnumerable<TLinksDto> dtos);
 
-        /// <inheritdoc cref="Initialize(System.Collections.Generic.IEnumerable{TModel},System.Collections.Generic.IEnumerable{TDto})" />
+        /// <inheritdoc
+        ///     cref="Initialize(System.Collections.Generic.IEnumerable{TSource},System.Collections.Generic.IEnumerable{TLinksDto})" />
         /// <param name="context">Optional context that can be used as additional data provider.</param>
-        void Initialize([NotNull] [ItemNotNull] IEnumerable<TModel> models, [NotNull] [ItemNotNull] IEnumerable<TDto> dtos, [NotNull] TContext context);
+        void Initialize([NotNull] [ItemNotNull] IEnumerable<TSource> sources, [NotNull] [ItemNotNull] IEnumerable<TLinksDto> dtos, [NotNull] TContext context);
+    }
+
+    /// <summary>
+    ///     Initialize the <see cref="ILinksDto.Links" /> and <see cref="ILinksDto.HRef" />
+    ///     members in a given Dto of type <typeparamref name="TLinksDto" />.
+    /// </summary>
+    /// <typeparam name="TLinksDto">A data transfer object of <see cref="ILinksDto" /></typeparam>
+    /// <typeparam name="TContext">Type of an optional context</typeparam>
+    public interface ILinksManager<in TLinksDto, in TContext>
+        where TLinksDto : ILinksDto
+        where TContext : LinksContext, new()
+    {
+        /// <summary>
+        ///     Initialize the <see cref="ILinksDto.Links" /> and <see cref="ILinksDto.HRef" />
+        ///     members of the <paramref name="dto" /> input.
+        /// </summary>
+        /// <param name="dto">The Dto that will be initialized.</param>
+        /// <remarks>
+        ///     After the initialization, <see cref="ILinksDto.Links" /> and/or
+        ///     <see cref="ILinksDto.HRef" /> can be <c>null</c>.
+        /// </remarks>
+        void Initialize([CanBeNull] TLinksDto dto);
+
+        /// <inheritdoc cref="Initialize(TLinksDto)" />
+        /// <param name="context">Optional context that can be used as additional data provider.</param>
+        void Initialize([CanBeNull] TLinksDto dto, [NotNull] TContext context);
+
+        /// <summary>
+        ///     Initialize the <see cref="ILinksDto.Links" /> and <see cref="ILinksDto.HRef" />
+        ///     members of the <paramref name="dtos" /> input.
+        /// </summary>
+        /// <param name="dtos">The Dto's that will be initialized.</param>
+        /// <remarks>
+        ///     After the initialization, <see cref="ILinksDto.Links" /> and/or
+        ///     <see cref="ILinksDto.HRef" /> can be <c>null</c>.
+        /// </remarks>
+        void Initialize([NotNull] [ItemNotNull] IEnumerable<TLinksDto> dtos);
+
+        /// <inheritdoc
+        ///     cref="Initialize(System.Collections.Generic.IEnumerable{TLinksDto})" />
+        /// <param name="context">Optional context that can be used as additional data provider.</param>
+        void Initialize([NotNull] [ItemNotNull] IEnumerable<TLinksDto> dtos, [NotNull] TContext context);
     }
 }

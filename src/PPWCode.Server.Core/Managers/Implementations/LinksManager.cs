@@ -22,12 +22,11 @@ using PPWCode.Server.Core.RequestContext.Interfaces;
 
 namespace PPWCode.Server.Core.Managers.Implementations
 {
-    /// <inheritdoc cref="ILinksManager{TModel,TDto,TContext}" />
-    public abstract class LinksManager<TModel, TDto, TContext>
+    /// <inheritdoc cref="ILinksManager{TSource,TLinksDto,TContext}" />
+    public abstract class LinksManager<TSource, TLinksDto, TContext>
         : Manager,
-          ILinksManager<TModel, TDto, TContext>
-        where TModel : class
-        where TDto : class, ILinksDto
+          ILinksManager<TSource, TLinksDto, TContext>
+        where TLinksDto : ILinksDto
         where TContext : LinksContext, new()
     {
         protected LinksManager([NotNull] IRequestContext requestContext)
@@ -39,18 +38,18 @@ namespace PPWCode.Server.Core.Managers.Implementations
         public IRequestContext RequestContext { get; }
 
         /// <inheritdoc />
-        public void Initialize(TModel model, TDto dto)
-            => Initialize(model, dto, new TContext());
+        public void Initialize(TSource source, TLinksDto dto)
+            => Initialize(source, dto, new TContext());
 
         /// <inheritdoc />
-        public void Initialize(TModel model, TDto dto, TContext context)
+        public void Initialize(TSource source, TLinksDto dto, TContext context)
         {
-            if ((model == null) || (dto == null))
+            if ((source == null) || (dto == null))
             {
                 return;
             }
 
-            Uri href = GetHref(model, context);
+            Uri href = GetHref(source, context);
             if (href != null)
             {
                 AddLink(dto, SelfKey, new Dictionary<string, object> { { HRefKey, href } });
@@ -58,7 +57,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
             }
 
             foreach (KeyValuePair<string, IDictionary<string, object>> additionalLink in
-                GetAdditionalLinks(model, context)
+                GetAdditionalLinks(source, context)
                     .Where(kv => !string.IsNullOrWhiteSpace(kv.Key) && (kv.Value != null)))
             {
                 AddLink(dto, additionalLink.Key, additionalLink.Value);
@@ -66,23 +65,23 @@ namespace PPWCode.Server.Core.Managers.Implementations
         }
 
         /// <inheritdoc />
-        public void Initialize(IEnumerable<TModel> models, IEnumerable<TDto> dtos)
-            => Initialize(models, dtos, new TContext());
+        public void Initialize(IEnumerable<TSource> sources, IEnumerable<TLinksDto> dtos)
+            => Initialize(sources, dtos, new TContext());
 
         /// <inheritdoc />
-        public void Initialize(IEnumerable<TModel> models, IEnumerable<TDto> dtos, TContext context)
+        public void Initialize(IEnumerable<TSource> sources, IEnumerable<TLinksDto> dtos, TContext context)
         {
-            using (IEnumerator<TModel> modelEnumerator = models.GetEnumerator())
+            using (IEnumerator<TSource> sourceEnumerator = sources.GetEnumerator())
             {
-                foreach (TDto dto in dtos)
+                foreach (TLinksDto dto in dtos)
                 {
-                    modelEnumerator.MoveNext();
-                    if (modelEnumerator.Current == null)
+                    sourceEnumerator.MoveNext();
+                    if (sourceEnumerator.Current == null)
                     {
-                        throw new InternalProgrammingError($"Expected that {nameof(dtos)} and {nameof(models)} are aligned.");
+                        throw new InternalProgrammingError($"Expected that {nameof(dtos)} and {nameof(sources)} are aligned.");
                     }
 
-                    Initialize(modelEnumerator.Current, dto, context);
+                    Initialize(sourceEnumerator.Current, dto, context);
                 }
             }
         }
@@ -101,7 +100,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
 
         /// <summary>
         ///     The <see cref="SelfRoute" /> together with the member <see cref="GetSelfRouteParameters" /> is being used to calculate a
-        ///     unique <see cref="Uri" /> to our resource of type <typeparamref name="TModel" />.
+        ///     unique <see cref="Uri" /> to our resource of type <typeparamref name="TSource" />.
         /// </summary>
         [CanBeNull]
         protected virtual string SelfRoute
@@ -109,26 +108,26 @@ namespace PPWCode.Server.Core.Managers.Implementations
 
         /// <summary>
         ///     Returns all identifiers that are necessary to calculate a unique <see cref="Uri" /> to our resource of type
-        ///     <typeparamref name="TModel" />.
+        ///     <typeparamref name="TSource" />.
         /// </summary>
-        /// <param name="source">Model where we extract our information</param>
+        /// <param name="source">The source where we extract our information</param>
         /// <param name="context">Context that can be used while mapping</param>
         /// <returns>
         ///     All identifiers necessary to calculate a unique <see cref="Uri" /> to our resource of type
-        ///     <typeparamref name="TModel" />.
+        ///     <typeparamref name="TSource" />.
         /// </returns>
         [CanBeNull]
-        protected virtual IDictionary<string, object> GetSelfRouteParameters([NotNull] TModel model, [NotNull] TContext context)
+        protected virtual IDictionary<string, object> GetSelfRouteParameters([NotNull] TSource source, [NotNull] TContext context)
             => null;
 
         /// <summary>
-        ///     Calculates a unique <see cref="Uri" />, for the <paramref name="model" />
+        ///     Calculates a unique <see cref="Uri" />, for the <paramref name="source" />
         /// </summary>
-        /// <param name="model">The model for which we have to calculate a unique <see cref="Uri" /></param>
+        /// <param name="source">The source where we extract our information</param>
         /// <param name="context">Context that can be used while mapping</param>
-        /// <param name="route">Optional route, if rout is <c>null</c>, <see cref="SelfRoute" /> will be taken</param>
+        /// <param name="route">Optional route, if route is <c>null</c>, <see cref="SelfRoute" /> will be taken</param>
         /// <param name="routeParameters">
-        ///     Optional route-parameters, if rout-parameters is <c>null</c>,
+        ///     Optional route-parameters, if route-parameters is <c>null</c>,
         ///     <see cref="GetSelfRouteParameters" /> will be taken
         /// </param>
         /// <returns>
@@ -136,12 +135,12 @@ namespace PPWCode.Server.Core.Managers.Implementations
         /// </returns>
         [CanBeNull]
         protected Uri GetHref(
-            [NotNull] TModel model,
+            [NotNull] TSource source,
             [NotNull] TContext context,
             [CanBeNull] string route = null,
             [CanBeNull] IDictionary<string, object> routeParameters = null)
         {
-            routeParameters = routeParameters ?? GetSelfRouteParameters(model, context);
+            routeParameters = routeParameters ?? GetSelfRouteParameters(source, context);
             route = route ?? SelfRoute;
 
             if ((route != null) && (routeParameters != null))
@@ -164,7 +163,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
         /// <remarks>A key can be added, if the key is not already exists as link and the reference is not null.</remarks>
         /// <result>If they is added, it will return true.</result>
         protected virtual bool AddLink(
-            [NotNull] TDto dto,
+            [NotNull] TLinksDto dto,
             [NotNull] string key,
             [NotNull] IDictionary<string, object> value)
         {
@@ -185,15 +184,44 @@ namespace PPWCode.Server.Core.Managers.Implementations
         /// <summary>
         ///     The possibility to enrich the <see cref="ILinksDto.Links" /> list.
         /// </summary>
-        /// <param name="source">The model</param>
+        /// <param name="source">The source where we extract our information</param>
         /// <param name="context">Context that can be used while mapping.</param>
         /// <returns>List of key / href pairs, to be added to our Links dictionary.</returns>
         [NotNull]
         protected virtual IEnumerable<KeyValuePair<string, IDictionary<string, object>>> GetAdditionalLinks(
-            [NotNull] TModel model,
+            [NotNull] TSource source,
             [NotNull] TContext context)
         {
             yield break;
         }
+    }
+
+    /// <inheritdoc cref="ILinksManager{TSource,TLinksDto,TContext}" />
+    public abstract class SimpleLinksManager<TLinksDto, TContext>
+        : LinksManager<TLinksDto, TLinksDto, TContext>,
+          ILinksManager<TLinksDto, TContext>
+        where TLinksDto : ILinksDto
+        where TContext : LinksContext, new()
+    {
+        protected SimpleLinksManager([NotNull] IRequestContext requestContext)
+            : base(requestContext)
+        {
+        }
+
+        /// <inheritdoc />
+        public void Initialize(TLinksDto dto)
+            => Initialize(dto, dto);
+
+        /// <inheritdoc />
+        public void Initialize(TLinksDto dto, TContext context)
+            => Initialize(dto, dto, context);
+
+        /// <inheritdoc />
+        public void Initialize(IEnumerable<TLinksDto> dtos)
+            => Initialize(dtos, dtos);
+
+        /// <inheritdoc />
+        public void Initialize(IEnumerable<TLinksDto> dtos, TContext context)
+            => Initialize(dtos, dtos, context);
     }
 }
