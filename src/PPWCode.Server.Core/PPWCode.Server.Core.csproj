@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- target frameworks -->
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <!-- Root Namespace -->
+    <RootNamespace>PPWCode.Server.Core</RootNamespace>
+
+    <!-- nuget package -->
+    <IsPackable>true</IsPackable>
+
+    <!-- Stylecop -->
+    <CodeAnalysisRuleSet>..\StyleCop.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- ASP.Net -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
+
+    <!-- PPWCode -->
+    <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="1.0.0" />
+    <PackageReference Include="PPWCode.API.Core" Version="1.0.0" />
+
+    <!-- NHibernate -->
+    <PackageReference Include="Castle.Windsor" Version="5.1.0" />
+    <PackageReference Include="NHibernateProfiler.Appender" Version="5.0.5051" />
+
+    <!-- System package mismatches -->
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+
+    <!-- SourceLink -->
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Managers\Implementations\DropAll.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Mappers\MapperContextV1.cs" />
+  </ItemGroup>
+
+</Project>
