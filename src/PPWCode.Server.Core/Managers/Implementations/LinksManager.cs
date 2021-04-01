@@ -57,7 +57,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
             Uri href = GetHref(source, context);
             if (href != null)
             {
-                AddLink(dto, SelfKey, new Dictionary<string, object> { { HRefKey, href } });
+                dto.Links.TryAdd(SelfKey, new Dictionary<string, object> { { HRefKey, href } });
                 dto.HRef = href;
             }
 
@@ -65,7 +65,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
                 GetAdditionalLinks(source, context)
                     .Where(kv => !string.IsNullOrWhiteSpace(kv.Key) && (kv.Value != null)))
             {
-                AddLink(dto, additionalLink.Key, additionalLink.Value);
+                dto.Links.TryAdd(additionalLink.Key, additionalLink.Value);
             }
         }
 
