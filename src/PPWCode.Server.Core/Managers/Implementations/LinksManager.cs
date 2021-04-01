@@ -49,6 +49,11 @@ namespace PPWCode.Server.Core.Managers.Implementations
                 return;
             }
 
+            if (dto.Links == null)
+            {
+                dto.Links = new Dictionary<string, IDictionary<string, object>>();
+            }
+
             Uri href = GetHref(source, context);
             if (href != null)
             {
