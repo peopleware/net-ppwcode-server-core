@@ -49,10 +49,15 @@ namespace PPWCode.Server.Core.Managers.Implementations
                 return;
             }
 
+            if (dto.Links == null)
+            {
+                dto.Links = new Dictionary<string, IDictionary<string, object>>();
+            }
+
             Uri href = GetHref(source, context);
             if (href != null)
             {
-                AddLink(dto, SelfKey, new Dictionary<string, object> { { HRefKey, href } });
+                dto.Links.TryAdd(SelfKey, new Dictionary<string, object> { { HRefKey, href } });
                 dto.HRef = href;
             }
 
@@ -60,7 +65,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
                 GetAdditionalLinks(source, context)
                     .Where(kv => !string.IsNullOrWhiteSpace(kv.Key) && (kv.Value != null)))
             {
-                AddLink(dto, additionalLink.Key, additionalLink.Value);
+                dto.Links.TryAdd(additionalLink.Key, additionalLink.Value);
             }
         }
 
@@ -151,34 +156,6 @@ namespace PPWCode.Server.Core.Managers.Implementations
             }
 
             return null;
-        }
-
-        /// <summary>
-        ///     Add a new link to <see cref="ILinksDto.Links" />.
-        /// </summary>
-        /// <param name="dto">Dto that contains a member <see cref="ILinksDto.Links" /></param>
-        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
-        /// <param name="key">Key of the link</param>
-        /// <param name="href">Link itself</param>
-        /// <remarks>A key can be added, if the key is not already exists as link and the reference is not null.</remarks>
-        /// <result>If they is added, it will return true.</result>
-        protected virtual bool AddLink(
-            [NotNull] TLinksDto dto,
-            [NotNull] string key,
-            [NotNull] IDictionary<string, object> value)
-        {
-            if ((dto.Links == null) || !dto.Links.ContainsKey(key))
-            {
-                if (dto.Links == null)
-                {
-                    dto.Links = new Dictionary<string, IDictionary<string, object>>();
-                }
-
-                dto.Links.Add(key, value);
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>
