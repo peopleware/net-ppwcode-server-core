@@ -159,34 +159,6 @@ namespace PPWCode.Server.Core.Managers.Implementations
         }
 
         /// <summary>
-        ///     Add a new link to <see cref="ILinksDto.Links" />.
-        /// </summary>
-        /// <param name="dto">Dto that contains a member <see cref="ILinksDto.Links" /></param>
-        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
-        /// <param name="key">Key of the link</param>
-        /// <param name="href">Link itself</param>
-        /// <remarks>A key can be added, if the key is not already exists as link and the reference is not null.</remarks>
-        /// <result>If they is added, it will return true.</result>
-        protected virtual bool AddLink(
-            [NotNull] TLinksDto dto,
-            [NotNull] string key,
-            [NotNull] IDictionary<string, object> value)
-        {
-            if ((dto.Links == null) || !dto.Links.ContainsKey(key))
-            {
-                if (dto.Links == null)
-                {
-                    dto.Links = new Dictionary<string, IDictionary<string, object>>();
-                }
-
-                dto.Links.Add(key, value);
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
         ///     The possibility to enrich the <see cref="ILinksDto.Links" /> list.
         /// </summary>
         /// <param name="source">The source where we extract our information</param>
