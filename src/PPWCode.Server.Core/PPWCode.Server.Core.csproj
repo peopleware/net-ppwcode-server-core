@@ -20,19 +20,19 @@
 
   <ItemGroup>
     <!-- ASP.Net -->
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
 
     <!-- PPWCode -->
     <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="1.0.0" />
     <PackageReference Include="PPWCode.API.Core" Version="1.0.0" />
 
     <!-- NHibernate -->
-    <PackageReference Include="Castle.Windsor" Version="5.1.0" />
-    <PackageReference Include="NHibernateProfiler.Appender" Version="5.0.5051" />
+    <PackageReference Include="Castle.Windsor" Version="5.1.1" />
+    <PackageReference Include="NHibernateProfiler.Appender" Version="6.0.6028" />
 
     <!-- System package mismatches -->
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
 
     <!-- SourceLink -->
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
