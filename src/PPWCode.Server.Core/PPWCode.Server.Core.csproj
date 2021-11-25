@@ -23,27 +23,23 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
 
     <!-- PPWCode -->
-    <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="1.0.0" />
-    <PackageReference Include="PPWCode.API.Core" Version="1.0.0" />
+    <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="[1.1.0, 2)" />
+    <PackageReference Include="PPWCode.API.Core" Version="[1.1.0, 2)" />
 
     <!-- NHibernate -->
     <PackageReference Include="Castle.Windsor" Version="5.1.1" />
-    <PackageReference Include="NHibernateProfiler.Appender" Version="6.0.6028" />
+    <PackageReference Include="NHibernateProfiler.Appender" Version="6.0.6029" />
 
     <!-- System package mismatches -->
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
 
     <!-- SourceLink -->
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Managers\Implementations\DropAll.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Mappers\MapperContextV1.cs" />
   </ItemGroup>
 
 </Project>
