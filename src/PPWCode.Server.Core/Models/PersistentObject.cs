@@ -44,10 +44,12 @@ namespace PPWCode.Server.Core.Models
         public virtual bool Equals(PersistentObject other)
             => IsSame(other);
 
+#pragma warning disable CA1033
         void IValidatable.Validate()
         {
             ThrowIfNotCivilized();
         }
+#pragma warning restore CA1033
 
         public override bool IsSame(IIdentity<long> other)
         {
