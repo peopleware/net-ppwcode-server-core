@@ -24,7 +24,7 @@
 
     <!-- PPWCode -->
     <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="[1.1.0-rc010047, 2)" />
-    <PackageReference Include="PPWCode.API.Core" Version="[1.1.0-rc010027, 2)" />
+    <PackageReference Include="PPWCode.API.Core" Version="[1.1.0, 2)" />
 
     <!-- NHibernate -->
     <PackageReference Include="Castle.Windsor" Version="5.1.1" />
