@@ -28,7 +28,7 @@
 
     <!-- NHibernate -->
     <PackageReference Include="Castle.Windsor" Version="5.1.1" />
-    <PackageReference Include="NHibernateProfiler.Appender" Version="6.0.6029" />
+    <PackageReference Include="NHibernateProfiler.Appender" Version="6.0.6031" />
 
     <!-- System package mismatches -->
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
