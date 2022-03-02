@@ -1,4 +1,4 @@
-// Copyright 2020 by PeopleWare n.v..
+// Copyright 2020-2022 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -23,6 +23,7 @@ using PPWCode.Vernacular.Persistence.IV;
 namespace PPWCode.Server.Core.Models
 {
     /// <inheritdoc cref="IAuditablePersistentObject" />
+    [SuppressMessage("Design", "CA1033", Justification = "Reviewed: Explicit interface implementation on purpose.")]
     [DataContract(IsReference = true)]
     public abstract class AuditablePersistentObject
         : AuditablePersistentObject<long>,
@@ -40,12 +41,10 @@ namespace PPWCode.Server.Core.Models
         {
         }
 
-#pragma warning disable CA1033
         void IValidatable.Validate()
         {
             ThrowIfNotCivilized();
         }
-#pragma warning restore CA1033
 
         public override bool IsSame(IIdentity<long> other)
         {
