@@ -23,7 +23,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
 
     <!-- PPWCode -->
-    <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="[1.1.0-rc010047, 2)" />
+    <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="[1.1.1, 2)" />
     <PackageReference Include="PPWCode.API.Core" Version="[1.1.0, 2)" />
 
     <!-- NHibernate -->
