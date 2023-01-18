@@ -53,6 +53,8 @@
 * Castle.Windsor 5.1.0 -> 5.1.1
 * System.Configuration.ConfigurationManager 4.7.0 -> 5.0.0
 * System.Data.SqlClient 4.8.2 -> 4.8.3
+1.1.1 Upgrade dependency
+* System.Data.SqlClient 4.8.3 -> 4.8.5
       ]]>
     </PackageReleaseNotes>
 
