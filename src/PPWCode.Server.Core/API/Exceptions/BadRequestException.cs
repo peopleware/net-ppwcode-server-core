@@ -10,14 +10,11 @@
 // limitations under the License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
 
 using PPWCode.Vernacular.Exceptions.IV;
 
 namespace PPWCode.Server.Core.API.Exceptions
 {
-    [Serializable]
     public class BadRequestException : ProgrammingError
     {
         public BadRequestException()
@@ -32,12 +29,6 @@ namespace PPWCode.Server.Core.API.Exceptions
 
         public BadRequestException(string message, Exception innerException)
             : base(message, innerException)
-        {
-        }
-
-        [ExcludeFromCodeCoverage]
-        protected BadRequestException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         {
         }
     }
