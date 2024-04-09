@@ -19,20 +19,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- ASP.Net -->
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
-
     <!-- PPWCode -->
-    <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="[2, 3)" />
-    <PackageReference Include="PPWCode.API.Core" Version="[1.2.0, 2)" />
+    <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="3.0.0-rc010076" />
+    <PackageReference Include="PPWCode.API.Core" Version="1.3.0-rc010038" />
 
-    <!-- NHibernate -->
+    <!-- Castle Windsor -->
     <PackageReference Include="Castle.Windsor" Version="5.1.1" />
-    <PackageReference Include="NHibernateProfiler.Appender" Version="6.0.6032" />
+    
+    <!-- NHibernate -->
+    <PackageReference Include="NHibernateProfiler.Appender" Version="6.0.6047" />
 
-    <!-- System package mismatches -->
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <!-- System -->
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+  </ItemGroup>
 
   <Choose>
     <When Condition=" '$(TargetFramework)' == 'net6.0' ">
