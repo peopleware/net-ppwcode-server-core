@@ -1,4 +1,4 @@
-// Copyright 2020 by PeopleWare n.v..
+// Copyright 2024 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -10,14 +10,11 @@
 // limitations under the License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
 
 using PPWCode.Vernacular.Exceptions.IV;
 
 namespace PPWCode.Server.Core.API.Exceptions
 {
-    [Serializable]
     public class BadRequestException : ProgrammingError
     {
         public BadRequestException()
@@ -32,12 +29,6 @@ namespace PPWCode.Server.Core.API.Exceptions
 
         public BadRequestException(string message, Exception innerException)
             : base(message, innerException)
-        {
-        }
-
-        [ExcludeFromCodeCoverage]
-        protected BadRequestException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         {
         }
     }

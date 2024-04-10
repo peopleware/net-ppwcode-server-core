@@ -1,4 +1,4 @@
-﻿// Copyright 2020 by PeopleWare n.v..
+﻿// Copyright 2024 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -24,7 +24,6 @@ namespace PPWCode.Server.Core.Mappers.Implementations
         where TModel : IAuditable
         where TDto : PPWCode.API.Core.IAuditable
     {
-
         /// <inheritdoc />
         public override void Map(TModel source, TDto destination)
         {
