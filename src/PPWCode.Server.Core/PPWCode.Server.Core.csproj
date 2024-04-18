@@ -31,18 +31,19 @@
 
     <!-- System -->
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6"/>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0"/>
   </ItemGroup>
 
   <Choose>
     <When Condition=" '$(TargetFramework)' == 'net6.0' ">
       <ItemGroup>
         <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.*"/>
+        <PackageReference Include="Asp.Versioning.Mvc" Version="6.*"/>
       </ItemGroup>
     </When>
     <When Condition=" '$(TargetFramework)' == 'net8.0' ">
       <ItemGroup>
         <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.*"/>
+        <PackageReference Include="Asp.Versioning.Mvc" Version="8.*"/>
       </ItemGroup>
     </When>
   </Choose>
