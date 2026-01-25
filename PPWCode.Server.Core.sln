@@ -8,15 +8,25 @@ ProjectSection(SolutionItems) = preProject
 	LICENSE = LICENSE
 	NOTICE = NOTICE
 	README.md = README.md
+	assets\ppw-logo-2.png = assets\ppw-logo-2.png
+	assets\ppw-logo.png = assets\ppw-logo.png
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-items", "{4ECF7D6B-D1BF-43C6-B0C4-3C2ED7E7F83E}"
 ProjectSection(SolutionItems) = preProject
+	src\common-tests.props = src\common-tests.props
+	src\common.props = src\common.props
 	src\Directory.Build.props = src\Directory.Build.props
-	src\version.props = src\version.props
+	src\Directory.Packages.props = src\Directory.Packages.props
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PPWCode.Server.Core", "src\PPWCode.Server.Core\PPWCode.Server.Core.csproj", "{5402A083-6C2C-407A-8AEB-FD6181875130}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "analyzers", "analyzers", "{C86B4C4B-01E3-40A6-A22A-44C1E37B6D1B}"
+	ProjectSection(SolutionItems) = preProject
+		src\Analyzer-Tests.ruleset = src\Analyzer-Tests.ruleset
+		src\Analyzer.ruleset = src\Analyzer.ruleset
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
