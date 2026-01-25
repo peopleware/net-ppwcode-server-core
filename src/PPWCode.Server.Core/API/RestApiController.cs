@@ -1,4 +1,4 @@
-// Copyright 2024 by PeopleWare n.v..
+// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -63,10 +63,9 @@ namespace PPWCode.Server.Core.API
         /// <param name="pagedModels">A paged list of <typeparamref name="TModel"></typeparamref>.</param>
         /// <param name="itemMapper">A mapper that can convert a model to dto.</param>
         /// <param name="context">Optional mapping context.</param>
-        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
-        /// <result>
+        /// <returns>
         ///     A <see cref="IPagedList{TModel}" />, where <c>T</c> is equal to <typeparamref name="TModel" />.
-        /// </result>
+        /// </returns>
         [NotNull]
         [ItemNotNull]
         protected virtual async Task<PagedList<TDto>> MapPagedListAsync<TModel, TIdentity, TDto, TContext>(
@@ -95,11 +94,12 @@ namespace PPWCode.Server.Core.API
         /// <typeparam name="TLinksContext">Type of an optional context while initializing links.</typeparam>
         /// <param name="pagedModels">A paged list of <typeparamref name="TModel"></typeparamref>.</param>
         /// <param name="itemMapper">A mapper that can convert a model to dto.</param>
-        /// <param name="context">Optional mapping context.</param>
-        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
-        /// <result>
+        /// <param name="linksManager">A links manager.</param>
+        /// <param name="mapperContext">Optional mapping context.</param>
+        /// <param name="linksContext">Optional links context.</param>
+        /// <returns>
         ///     A <see cref="IPagedList{TModel}" />, where <c>T</c> is equal to <typeparamref name="TModel" />.
-        /// </result>
+        /// </returns>
         /// <remarks>
         ///     The links are also initialized while converting, using the <paramref name="linksManager" />.
         /// </remarks>

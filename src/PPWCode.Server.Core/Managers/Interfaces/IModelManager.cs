@@ -1,4 +1,4 @@
-// Copyright 2024 by PeopleWare n.v..
+// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -69,11 +69,12 @@ namespace PPWCode.Server.Core.Managers.Interfaces
         ///     All business code necessary to create/update a model of type <typeparamref name="TModel" /> in our persistent
         ///     store.
         /// </summary>
-        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work</param>
         /// <param name="model">
         ///     The model to be created/updated. This model should be a transient <see cref="IPersistentObject{T}" /> when
         ///     creating.
         /// </param>
+        /// <param name="cancellationToken">A cancellation token that can be used to cancel the work</param>
+        /// <returns>A task</returns>
         Task SaveAsync([NotNull] TModel model, CancellationToken cancellationToken);
 
         /// <summary>
@@ -81,6 +82,7 @@ namespace PPWCode.Server.Core.Managers.Interfaces
         /// </summary>
         /// <param name="model">The model to be deleted. This model is a none-transient <see cref="IPersistentObject{T}" />.</param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work</param>
+        /// <returns>A task</returns>
         Task DeleteAsync([NotNull] TModel model, CancellationToken cancellationToken);
     }
 }

@@ -1,4 +1,4 @@
-// Copyright 2024 by PeopleWare n.v..
+// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -64,6 +64,7 @@ namespace PPWCode.Server.Core.Mappers.Interfaces
         /// <param name="dto">Object to be converted</param>
         /// <param name="component">Converted object</param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
+        /// <returns>A task</returns>
         [NotNull]
         Task MapAsync(
             [NotNull] TDto dto,
@@ -77,6 +78,7 @@ namespace PPWCode.Server.Core.Mappers.Interfaces
         /// <param name="component">Converted object</param>
         /// <param name="context">Optional context of type <typeparamref name="TContext" /></param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the work.</param>
+        /// <returns>A task</returns>
         [NotNull]
         Task MapAsync(
             [NotNull] TDto dto,
