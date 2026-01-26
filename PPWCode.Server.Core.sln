@@ -8,19 +8,12 @@ ProjectSection(SolutionItems) = preProject
 	LICENSE = LICENSE
 	NOTICE = NOTICE
 	README.md = README.md
-	assets\ppwcode_logo.jpg = assets\ppwcode_logo.jpg
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-items", "{4ECF7D6B-D1BF-43C6-B0C4-3C2ED7E7F83E}"
 ProjectSection(SolutionItems) = preProject
 	src\Directory.Build.props = src\Directory.Build.props
 	src\version.props = src\version.props
-EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "style-cop", "style-cop", "{6B593DB7-7E09-40DE-A2F9-54FF173DC811}"
-ProjectSection(SolutionItems) = preProject
-	src\StyleCop.ruleset = src\StyleCop.ruleset
-	src\StyleCop-Tests.ruleset = src\StyleCop-Tests.ruleset
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PPWCode.Server.Core", "src\PPWCode.Server.Core\PPWCode.Server.Core.csproj", "{5402A083-6C2C-407A-8AEB-FD6181875130}"
