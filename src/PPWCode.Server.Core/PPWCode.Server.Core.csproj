@@ -1,55 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <!-- target frameworks -->
-    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <Import Project="..\common.props"/>
 
-    <!-- Root Namespace -->
-    <RootNamespace>PPWCode.Server.Core</RootNamespace>
+    <PropertyGroup>
+        <!-- Root Namespace -->
+        <RootNamespace>PPWCode.Server.Core</RootNamespace>
+    </PropertyGroup>
 
-    <!-- nuget package -->
-    <IsPackable>true</IsPackable>
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
 
-    <!-- Stylecop -->
-    <CodeAnalysisRuleSet>..\StyleCop.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+    <ItemGroup>
+        <!-- PPWCode -->
+        <PackageReference Include="PPWCode.Vernacular.NHibernate.III"/>
+        <PackageReference Include="PPWCode.API.Core"/>
 
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App"/>
-  </ItemGroup>
+        <!-- Castle Windsor -->
+        <PackageReference Include="Castle.Windsor"/>
 
-  <ItemGroup>
-    <!-- PPWCode -->
-    <PackageReference Include="PPWCode.Vernacular.NHibernate.III" Version="3.*"/>
-    <PackageReference Include="PPWCode.API.Core" Version="1.*"/>
+        <!-- NHibernate -->
+        <PackageReference Include="NHibernateProfiler.Appender"/>
 
-    <!-- Castle Windsor -->
-    <PackageReference Include="Castle.Windsor" Version="5.1.1"/>
+        <!-- System -->
+        <PackageReference Include="System.Data.SqlClient"/>
+        <PackageReference Include="System.Configuration.ConfigurationManager"/>
+        <PackageReference Include="Asp.Versioning.Mvc"/>
+    </ItemGroup>
 
-    <!-- NHibernate -->
-    <PackageReference Include="NHibernateProfiler.Appender" Version="6.0.6047"/>
-
-    <!-- System -->
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.6"/>
-  </ItemGroup>
-
-  <Choose>
-    <When Condition=" '$(TargetFramework)' == 'net6.0' ">
-      <ItemGroup>
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.*"/>
-        <PackageReference Include="Asp.Versioning.Mvc" Version="6.*"/>
-      </ItemGroup>
-    </When>
-    <When Condition=" '$(TargetFramework)' == 'net8.0' ">
-      <ItemGroup>
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.*"/>
-        <PackageReference Include="Asp.Versioning.Mvc" Version="8.*"/>
-      </ItemGroup>
-    </When>
-  </Choose>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Managers\Implementations\DropAll.sql"/>
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Managers\Implementations\DropAll.sql"/>
+    </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-// Copyright 2024 by PeopleWare n.v..
+// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -16,9 +16,9 @@ using System.Linq;
 using JetBrains.Annotations;
 
 using PPWCode.API.Core;
-using PPWCode.API.Core.Exceptions;
 using PPWCode.Server.Core.Managers.Interfaces;
 using PPWCode.Server.Core.RequestContext.Interfaces;
+using PPWCode.Vernacular.Exceptions.IV;
 
 namespace PPWCode.Server.Core.Managers.Implementations
 {
@@ -36,6 +36,27 @@ namespace PPWCode.Server.Core.Managers.Implementations
 
         [NotNull]
         public IRequestContext RequestContext { get; }
+
+        /// <summary>
+        ///     Name of self for entry in Links.
+        /// </summary>
+        protected virtual string SelfKey
+            => "self";
+
+        /// <summary>
+        ///     Name of href for entry in Links.
+        /// </summary>
+        protected virtual string HRefKey
+            => "href";
+
+        /// <summary>
+        ///     The <see cref="SelfRoute" /> together with the member <see cref="GetSelfRouteParameters" /> is being used to
+        ///     calculate a
+        ///     unique <see cref="Uri" /> to our resource of type <typeparamref name="TSource" />.
+        /// </summary>
+        [CanBeNull]
+        protected virtual string SelfRoute
+            => null;
 
         /// <inheritdoc />
         public void Initialize(TSource source, TLinksDto dto)
@@ -62,8 +83,8 @@ namespace PPWCode.Server.Core.Managers.Implementations
             }
 
             foreach (KeyValuePair<string, IDictionary<string, object>> additionalLink in
-                GetAdditionalLinks(source, context)
-                    .Where(kv => !string.IsNullOrWhiteSpace(kv.Key) && (kv.Value != null)))
+                     GetAdditionalLinks(source, context)
+                         .Where(kv => !string.IsNullOrWhiteSpace(kv.Key) && (kv.Value != null)))
             {
                 dto.Links.TryAdd(additionalLink.Key, additionalLink.Value);
             }
@@ -90,26 +111,6 @@ namespace PPWCode.Server.Core.Managers.Implementations
                 }
             }
         }
-
-        /// <summary>
-        ///     Name of self for entry in Links.
-        /// </summary>
-        protected virtual string SelfKey
-            => "self";
-
-        /// <summary>
-        ///     Name of href for entry in Links.
-        /// </summary>
-        protected virtual string HRefKey
-            => "href";
-
-        /// <summary>
-        ///     The <see cref="SelfRoute" /> together with the member <see cref="GetSelfRouteParameters" /> is being used to calculate a
-        ///     unique <see cref="Uri" /> to our resource of type <typeparamref name="TSource" />.
-        /// </summary>
-        [CanBeNull]
-        protected virtual string SelfRoute
-            => null;
 
         /// <summary>
         ///     Returns all identifiers that are necessary to calculate a unique <see cref="Uri" /> to our resource of type
@@ -171,34 +172,5 @@ namespace PPWCode.Server.Core.Managers.Implementations
         {
             yield break;
         }
-    }
-
-    /// <inheritdoc cref="ILinksManager{TSource,TLinksDto,TContext}" />
-    public abstract class SimpleLinksManager<TLinksDto, TContext>
-        : LinksManager<TLinksDto, TLinksDto, TContext>,
-          ILinksManager<TLinksDto, TContext>
-        where TLinksDto : ILinksDto
-        where TContext : LinksContext, new()
-    {
-        protected SimpleLinksManager([NotNull] IRequestContext requestContext)
-            : base(requestContext)
-        {
-        }
-
-        /// <inheritdoc />
-        public void Initialize(TLinksDto dto)
-            => Initialize(dto, dto);
-
-        /// <inheritdoc />
-        public void Initialize(TLinksDto dto, TContext context)
-            => Initialize(dto, dto, context);
-
-        /// <inheritdoc />
-        public void Initialize(IEnumerable<TLinksDto> dtos)
-            => Initialize(dtos, dtos);
-
-        /// <inheritdoc />
-        public void Initialize(IEnumerable<TLinksDto> dtos, TContext context)
-            => Initialize(dtos, dtos, context);
     }
 }

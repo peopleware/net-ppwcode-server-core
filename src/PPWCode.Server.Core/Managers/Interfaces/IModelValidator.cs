@@ -1,4 +1,4 @@
-﻿// Copyright 2024 by PeopleWare n.v..
+﻿// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 
 using JetBrains.Annotations;
 
-using PPWCode.API.Core.Exceptions;
 using PPWCode.Vernacular.Exceptions.IV;
 using PPWCode.Vernacular.Persistence.IV;
 
@@ -52,6 +51,7 @@ namespace PPWCode.Server.Core.Managers.Interfaces
         ///     a problem inside the back end itself is detected.  This is typically used when some
         ///     post conditions or invariants are violated.
         /// </exception>
+        /// <returns>A task</returns>
         [NotNull]
         Task ValidateAsync([NotNull] TModel model, CancellationToken cancellationToken);
 
@@ -71,6 +71,7 @@ namespace PPWCode.Server.Core.Managers.Interfaces
         ///     a problem inside the back end itself is detected.  This is typically used when some
         ///     post conditions or invariants are violated.
         /// </exception>
+        /// <returns>A task</returns>
         [NotNull]
         Task ValidateAsync([NotNull] [ItemNotNull] TModel[] models, CancellationToken cancellationToken);
     }

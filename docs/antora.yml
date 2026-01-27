@@ -1,0 +1,5 @@
+name: ppwcode-server-core
+version: ~
+title: PPWCode.Server.Core
+nav:
+  - modules/ROOT/nav.adoc
