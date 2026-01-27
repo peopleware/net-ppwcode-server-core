@@ -1,0 +1,13 @@
+////
+The changelog for a specific release.
+Note that it is best to update the changelog as new code is developed.
+
+All attributes used, must be included in this file to keep it self-contained.
+
+This file is translated into markdown and used for the release notes in the GitHub release!
+////
+
+=== Breaking
+* Switch from (no longer supported) `Microsoft.AspNetCore.Mvc.Versioning` to `Asp.Versioning.Mvc`
+* `ControllerContext` is no longer available for injection
+* `WebApiRequestContext`: the constructor changed and is not backwards compatible
