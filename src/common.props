@@ -8,8 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="PPWCode.Vernacular.Contracts.I"/>
         <PackageReference Include="JetBrains.Annotations" />
     </ItemGroup>
-    
+
     <!-- common dependencies included using GlobalPackageReference -->
 </Project>

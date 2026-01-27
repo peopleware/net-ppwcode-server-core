@@ -18,33 +18,38 @@
 
     <!-- package versions -->
     <ItemGroup>
+        <!-- jetbrains -->
+        <PackageVersion Include="JetBrains.Annotations" Version="2025.2.4" />
+
         <!-- ppwcode -->
+        <PackageVersion Include="PPWCode.Vernacular.Contracts.I" Version="1.*" />
         <PackageVersion Include="PPWCode.Vernacular.Exceptions.IV" Version="2.*" />
-        <PackageVersion Include="PPWCode.Vernacular.Persistence.IV" Version="2.*" />
         <PackageVersion Include="PPWCode.Vernacular.Semantics.IV" Version="2.*" />
-        <PackageVersion Include="PPWCode.Vernacular.NHibernate.III" Version="3.*"/>
-        <PackageVersion Include="PPWCode.API.Core" Version="1.*"/>
+        <PackageVersion Include="PPWCode.Vernacular.Persistence.IV" Version="2.*" />
+        <PackageVersion Include="PPWCode.Vernacular.NHibernate.III" Version="4.*"/>
+        <PackageVersion Include="PPWCode.API.Core" Version="2.*"/>
 
         <!-- system -->
         <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
-        <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.*"/>
-        <PackageVersion Include="System.Data.SqlClient" Version="4.8.6"/>
-        <PackageVersion Include="System.Drawing.Common" Version="5.0.3" />
-        
-        <!-- jetbrains -->
-        <PackageVersion Include="JetBrains.Annotations" Version="2025.2.4" />
+        <PackageVersion Include="System.Configuration.ConfigurationManager" Version="10.*"/>
+
+        <!-- SQL Server -->
+        <!-- legacy! should upgrade to Microsoft.Data.SqlClient -->
+        <PackageVersion Include="System.Data.SqlClient" Version="4.*" />
 
         <!-- newtonsoft -->
         <PackageVersion Include="Newtonsoft.Json" Version="13.*" />
 
         <!-- castle -->
-        <PackageVersion Include="Castle.Core" Version="5.*" />
-        <PackageVersion Include="Castle.Windsor" Version="5.1.1"/>
+        <PackageVersion Include="Castle.Windsor" Version="[5.1.1, 5.1.2]"/>
+
+        <!-- Asp.Net Core - versioning apis -->
+        <PackageVersion Include="Asp.Versioning.Mvc" Version="8.*"/>
 
         <!-- nhibernate -->
-        <PackageVersion Include="NHibernate" Version="5.5.2" />
-        <PackageVersion Include="NHibernateProfiler.Appender" Version="6.0.6047"/>
-        
+        <PackageVersion Include="NHibernate" Version="5.*" />
+        <PackageVersion Include="NHibernateProfiler.Appender" Version="6.0.*"/>
+
         <!-- nunit -->
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
         <PackageVersion Include="NUnit" Version="4.4.0" />
@@ -57,20 +62,14 @@
     </ItemGroup>
 
     <!-- microsoft: framework dependent -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-        <PackageVersion Include="Asp.Versioning.Mvc" Version="6.*"/>
-    </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
         <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.*" />
-        <PackageVersion Include="Asp.Versioning.Mvc" Version="8.*"/>
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
         <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.*" />
-        <PackageVersion Include="Asp.Versioning.Mvc" Version="8.*"/>
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
         <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.*" />
-        <PackageVersion Include="Asp.Versioning.Mvc" Version="8.*"/>
     </ItemGroup>
 
     <!-- global package references -->
