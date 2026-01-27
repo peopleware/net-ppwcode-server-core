@@ -17,7 +17,7 @@ jobs:
       checks: write
 
     steps:
-      - name: Checkout tag ${{ inputs.tag }}  
+      - name: Checkout tag ${{ inputs.tag }}
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.tag }}

@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test:
-    name: Build & Test - ${{ matrix.name-suffix }}
+    name: Build - ${{ matrix.name-suffix }}
     runs-on: ${{ matrix.os }}
     permissions:
       checks: write
@@ -52,65 +52,6 @@ jobs:
             --configuration Release \
             --no-restore \
             -p:ContinuousIntegrationBuild=true
-
-#      - name: Test
-#        shell: bash
-#        run: |
-#          dotnet test PPWCode.Server.Core.sln \
-#            --configuration Release \
-#            --no-build \
-#            --verbosity normal \
-#            --logger "trx;LogFilePrefix=test-results" \
-#            --collect:"XPlat Code Coverage" \
-#            --results-directory ./coverage \
-#            -p:ContinuousIntegrationBuild=true
-
-#      - name: Publish Test Results
-#        uses: dorny/test-reporter@v2
-#        if: ${{ !cancelled() }} # run this step even if previous step failed
-#        with:
-#          name: Test Results - ${{ matrix.name-suffix }}
-#          report-title: Test Results - ${{ matrix.name-suffix }}
-#          path: 'coverage/test-results_*_*.trx'
-#          reporter: dotnet-trx
-#          fail-on-error: true
-
-#      - name: Generate Coverage Report
-#        if: always()
-#        shell: bash
-#        run: |
-#          dotnet tool install -g dotnet-reportgenerator-globaltool
-#          reportgenerator \
-#            -reports:"coverage/*/coverage.cobertura.xml" \
-#            -targetdir:"coveragereport-html" \
-#            -reporttypes:"Html;MarkdownSummaryGithub" \
-#            -title:"Coverage Report - ${{ matrix.name-suffix }}" \
-#            -verbosity:Warning
-
-#      - name: Add Coverage to Job Summary
-#        if: always()
-#        shell: bash
-#        run: |
-#          if [ -f coveragereport-html/SummaryGithub.md ]; then
-#            # remove the "Summary -" prefix while we're at it
-#            sed -e 's/^# Summary - \(.*\)$/# \1/' coveragereport-html/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
-#          fi
-
-#      - name: Upload Coverage HTML Report
-#        uses: actions/upload-artifact@v4
-#        if: always()
-#        with:
-#          name: coverage-report-html-${{ matrix.name-suffix }}
-#          path: coveragereport-html/
-#          retention-days: 30
-
-#      - name: Upload Test and Coverage Raw Results
-#        uses: actions/upload-artifact@v4
-#        if: always()
-#        with:
-#          name: test-and-coverage-raw-${{ matrix.name-suffix }}
-#          path: coverage/
-#          retention-days: 30
 
   publish:
     needs: build-and-test
@@ -257,12 +198,6 @@ jobs:
           dotnet nuget push ./artifacts/*.nupkg \
             --source https://api.nuget.org/v3/index.json \
             --api-key "${{ steps.nuget_login.outputs.NUGET_API_KEY }}"
-
-#      - name: Download all artifacts
-#        if: steps.get_version.outputs.is_prerelease == 'false'
-#        uses: actions/download-artifact@v4
-#        with:
-#          path: release-artifacts
 
       - name: Create release ZIPs
         if: steps.get_version.outputs.is_prerelease == 'false'
