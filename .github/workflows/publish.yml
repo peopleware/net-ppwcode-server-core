@@ -33,6 +33,7 @@ jobs:
             8.0.x
             9.0.x
             10.0.x
+          global-json-file: ./global.json
 
       - name: Restore dependencies
         shell: bash
@@ -146,6 +147,14 @@ jobs:
             echo "[View full changelog →](https://peopleware.github.io/net-ppwcode-docs/ppwcode-server-core/changelog.html#${{ steps.get_version.outputs.version_clean }})"
           } > release_body.md
 
+      - name: Add Release Notes to Job Summary
+        run: |
+          if [ -f release_body.md ]; then
+            echo "# PPWCode.API.Core ${{ steps.get_version.outputs.version_trimmed }}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            cat release_body.md >> $GITHUB_STEP_SUMMARY
+          fi
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -203,20 +212,9 @@ jobs:
         if: steps.get_version.outputs.is_prerelease == 'false'
         run: |
           mkdir release-artifacts
-          cd release-artifacts
-
-          # Zip test and coverage raw per OS
-          #zip -r -9 PPWCode.Server.Core-test-output-raw_Linux_${{ steps.get_version.outputs.version }}.zip test-and-coverage-raw-Linux/
-          #zip -r -9 PPWCode.Server.Core-test-output-raw_macOS_${{ steps.get_version.outputs.version }}.zip test-and-coverage-raw-macOS/
-          #zip -r -9 PPWCode.Server.Core-test-output-raw_Windows_${{ steps.get_version.outputs.version }}.zip test-and-coverage-raw-Windows/
-
-          # Zip coverage HTML per OS
-          #zip -r -9 PPWCode.Server.Core-coverage-report-html_Linux_${{ steps.get_version.outputs.version }}.zip coverage-report-html-Linux/
-          #zip -r -9 PPWCode.Server.Core-coverage-report-html_macOS_${{ steps.get_version.outputs.version }}.zip coverage-report-html-macOS/
-          #zip -r -9 PPWCode.Server.Core-coverage-report-html_Windows_${{ steps.get_version.outputs.version }}.zip coverage-report-html-Windows/
 
           # Zip all NuGet packages
-          cd ../artifacts
+          cd artifacts
           zip -r -9 ../release-artifacts/PPWCode.Server.Core-nuget-pkgs_${{ steps.get_version.outputs.version }}.zip *.nupkg
 
       - name: Create GitHub Release
