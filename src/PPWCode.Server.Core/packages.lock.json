@@ -57,9 +57,9 @@
       },
       "PPWCode.API.Core": {
         "type": "Direct",
-        "requested": "[2.*, )",
-        "resolved": "2.1.0",
-        "contentHash": "lXudjzAAEo2i6WB2S8kkuBH1Mz73g6fAiJ/7/aPGCyTZsblHHdylX9nDEkHT9HAu1V1l0CUQjM5Gu38MM4L0sA==",
+        "requested": "[3.*-*, )",
+        "resolved": "3.0.0-alpha.1",
+        "contentHash": "I1VpTAbzTlMxAzjRrURRP73BN4tI6zUSOZiaDFDbhBbLQqztXvYKlSJSLGaIhAN66lQIhjr/tBiHt2WylIA4Iw==",
         "dependencies": {
           "JetBrains.Annotations": "2025.2.4"
         }
@@ -507,9 +507,9 @@
       },
       "PPWCode.API.Core": {
         "type": "Direct",
-        "requested": "[2.*, )",
-        "resolved": "2.1.0",
-        "contentHash": "lXudjzAAEo2i6WB2S8kkuBH1Mz73g6fAiJ/7/aPGCyTZsblHHdylX9nDEkHT9HAu1V1l0CUQjM5Gu38MM4L0sA==",
+        "requested": "[3.*-*, )",
+        "resolved": "3.0.0-alpha.1",
+        "contentHash": "I1VpTAbzTlMxAzjRrURRP73BN4tI6zUSOZiaDFDbhBbLQqztXvYKlSJSLGaIhAN66lQIhjr/tBiHt2WylIA4Iw==",
         "dependencies": {
           "JetBrains.Annotations": "2025.2.4"
         }
@@ -963,9 +963,9 @@
       },
       "PPWCode.API.Core": {
         "type": "Direct",
-        "requested": "[2.*, )",
-        "resolved": "2.1.0",
-        "contentHash": "lXudjzAAEo2i6WB2S8kkuBH1Mz73g6fAiJ/7/aPGCyTZsblHHdylX9nDEkHT9HAu1V1l0CUQjM5Gu38MM4L0sA==",
+        "requested": "[3.*-*, )",
+        "resolved": "3.0.0-alpha.1",
+        "contentHash": "I1VpTAbzTlMxAzjRrURRP73BN4tI6zUSOZiaDFDbhBbLQqztXvYKlSJSLGaIhAN66lQIhjr/tBiHt2WylIA4Iw==",
         "dependencies": {
           "JetBrains.Annotations": "2025.2.4"
         }
