@@ -15,9 +15,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Castle.Core.Logging;
-
 using JetBrains.Annotations;
+
+using Microsoft.Extensions.Logging;
 
 using PPWCode.Server.Core.Managers.Interfaces;
 using PPWCode.Server.Core.Utils;
@@ -32,28 +32,18 @@ namespace PPWCode.Server.Core.Managers.Implementations
         where TModel : class, IPersistentObject<TIdentity>
         where TIdentity : struct, IEquatable<TIdentity>
     {
-        private ILogger _logger = NullLogger.Instance;
+        [CanBeNull]
+        private ILogger _logger;
 
         [NotNull]
-        [UsedImplicitly]
         public ILogger Logger
-        {
-            get => _logger;
-            set
-            {
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                if (value != null)
-                {
-                    _logger = value;
-                }
-            }
-        }
+            => _logger ??= PPWLogging.GetLogger(GetType());
 
         /// <inheritdoc />
         public virtual async Task ValidateAsync(TModel model, CancellationToken cancellationToken)
         {
             IEnumerable<SemanticException> semanticExceptions =
-                await OnValidateAsync(model, cancellationToken);
+                await OnValidateAsync(model, cancellationToken).ConfigureAwait(false);
             CompoundSemanticException validationErrors =
                 semanticExceptions
                     .Aggregate(
@@ -73,7 +63,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
                 throw validationErrors;
             }
 
-            await OnInvariantsAsync(model, cancellationToken);
+            await OnInvariantsAsync(model, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -86,7 +76,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
             {
                 try
                 {
-                    await ValidateAsync(model, cancellationToken);
+                    await ValidateAsync(model, cancellationToken).ConfigureAwait(false);
                 }
                 catch (CompoundSemanticException cse)
                 {

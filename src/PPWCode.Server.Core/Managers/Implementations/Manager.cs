@@ -1,4 +1,4 @@
-// Copyright 2024 by PeopleWare n.v..
+// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -9,31 +9,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Castle.Core.Logging;
-
 using JetBrains.Annotations;
 
+using Microsoft.Extensions.Logging;
+
 using PPWCode.Server.Core.Managers.Interfaces;
+using PPWCode.Server.Core.Utils;
 
 namespace PPWCode.Server.Core.Managers.Implementations
 {
     public abstract class Manager : IManager
     {
-        private ILogger _logger = NullLogger.Instance;
+        [CanBeNull]
+        private ILogger _logger;
 
         [NotNull]
-        [UsedImplicitly]
         public ILogger Logger
-        {
-            get => _logger;
-            set
-            {
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                if (value != null)
-                {
-                    _logger = value;
-                }
-            }
-        }
+            => _logger ??= PPWLogging.GetLogger(GetType());
     }
 }

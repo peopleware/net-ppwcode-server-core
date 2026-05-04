@@ -1,4 +1,4 @@
-// Copyright 2024 by PeopleWare n.v..
+// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -18,11 +18,11 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using Castle.Core.Logging;
-
 using HibernatingRhinos.Profiler.Appender;
 
 using JetBrains.Annotations;
+
+using Microsoft.Extensions.Logging;
 
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
@@ -38,7 +38,8 @@ namespace PPWCode.Server.Core.Managers.Implementations
     [UsedImplicitly]
     public abstract class DatabaseManager : IDatabaseManager
     {
-        private ILogger _logger = NullLogger.Instance;
+        [CanBeNull]
+        private ILogger _logger;
 
         protected DatabaseManager(
             [NotNull] INHibernateSessionFactory nHibernateSessionFactory,
@@ -59,19 +60,8 @@ namespace PPWCode.Server.Core.Managers.Implementations
         [NotNull]
         public IPpwHbmMapping PPWHbmMapping { get; }
 
-        [UsedImplicitly]
         public ILogger Logger
-        {
-            get => _logger;
-            set
-            {
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                if (value != null)
-                {
-                    _logger = value;
-                }
-            }
-        }
+            => _logger ??= PPWLogging.GetLogger(GetType());
 
         public virtual void ExecuteScript(string script)
         {
@@ -210,7 +200,7 @@ namespace PPWCode.Server.Core.Managers.Implementations
                     .AppendLine()
                     .AppendLine(hbmMapping.AsString())
                     .ToString();
-            Logger.Info(xmlMapping);
+            Logger.LogInformation(xmlMapping);
         }
     }
 }
