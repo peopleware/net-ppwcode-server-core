@@ -77,7 +77,7 @@ namespace PPWCode.Server.Core.API
             where TDto : class, IPersistentDto<TIdentity>
             where TContext : MapperContext, new()
             => new PagedList<TDto>(
-                await itemMapper.MapAsync(pagedModels.Items, context ?? new TContext(), HttpContext.RequestAborted),
+                await itemMapper.MapAsync(pagedModels.Items, context ?? new TContext(), HttpContext.RequestAborted).ConfigureAwait(false),
                 pagedModels.PageIndex,
                 pagedModels.PageSize,
                 pagedModels.TotalCount);
@@ -117,7 +117,7 @@ namespace PPWCode.Server.Core.API
             where TMapperContext : MapperContext, new()
             where TLinksContext : LinksContext, new()
         {
-            TDto[] dtos = await itemMapper.MapAsync(pagedModels.Items, mapperContext ?? new TMapperContext(), HttpContext.RequestAborted);
+            TDto[] dtos = await itemMapper.MapAsync(pagedModels.Items, mapperContext ?? new TMapperContext(), HttpContext.RequestAborted).ConfigureAwait(false);
             linksManager.Initialize(pagedModels.Items, dtos, linksContext ?? new TLinksContext());
             return new PagedList<TDto>(
                 dtos,
