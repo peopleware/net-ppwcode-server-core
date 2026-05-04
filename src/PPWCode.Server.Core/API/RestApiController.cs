@@ -12,11 +12,10 @@
 using System;
 using System.Threading.Tasks;
 
-using Castle.Core.Logging;
-
 using JetBrains.Annotations;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 using PPWCode.API.Core;
 using PPWCode.Server.Core.Managers.Implementations;
@@ -24,6 +23,7 @@ using PPWCode.Server.Core.Managers.Interfaces;
 using PPWCode.Server.Core.Mappers;
 using PPWCode.Server.Core.Mappers.Interfaces;
 using PPWCode.Server.Core.Transactional;
+using PPWCode.Server.Core.Utils;
 using PPWCode.Vernacular.Persistence.IV;
 
 namespace PPWCode.Server.Core.API
@@ -34,22 +34,12 @@ namespace PPWCode.Server.Core.API
         : ControllerBase,
           IRestApiController
     {
-        private ILogger _logger = NullLogger.Instance;
+        [CanBeNull]
+        private ILogger _logger;
 
         [NotNull]
-        [UsedImplicitly]
         public ILogger Logger
-        {
-            get => _logger;
-            set
-            {
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                if (value != null)
-                {
-                    _logger = value;
-                }
-            }
-        }
+            => _logger ??= PPWLogging.GetLogger(GetType());
 
         /// <summary>
         ///     Converts a <see cref="IPagedList{TModel}" />, where <c>T</c> is equal to <typeparamref name="TModel" />, to a

@@ -1,4 +1,4 @@
-// Copyright 2024 by PeopleWare n.v..
+// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -16,6 +16,7 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace PPWCode.Server.Core.API.Exceptions
 {
@@ -26,7 +27,7 @@ namespace PPWCode.Server.Core.API.Exceptions
         {
             if (context.Exception is NotImplementedException e)
             {
-                Logger.Error(e.Message, e);
+                Logger.LogError(e.Message, e);
                 context.Result = new ClientClosedResult();
                 return true;
             }
