@@ -12,8 +12,7 @@ the link to the GitHub tag is only added once we are ready to release.
 :nuget: https://www.nuget.org/packages/PPWCode.Server.Core/
 :ppwcode-docs: https://peopleware.github.io/net-ppwcode-docs/ppwcode-server-core/
 
-
-:release: 3.0.1
+:release: 4.0.0
 == `{release}`
 include::partial$changelog-release-section.adoc[]
 include::partial$changelog-{release}.adoc[]
