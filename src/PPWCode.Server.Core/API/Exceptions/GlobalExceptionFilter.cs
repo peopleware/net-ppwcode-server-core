@@ -1,4 +1,4 @@
-﻿// Copyright 2024 by PeopleWare n.v..
+﻿// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -11,13 +11,14 @@
 
 using System.Threading.Tasks;
 
-using Castle.Core.Logging;
-
 using JetBrains.Annotations;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
+
+using PPWCode.Server.Core.Utils;
 
 namespace PPWCode.Server.Core.API.Exceptions
 {
@@ -25,26 +26,17 @@ namespace PPWCode.Server.Core.API.Exceptions
         : IAsyncExceptionFilter,
           IOrderedFilter
     {
-        private ILogger _logger = NullLogger.Instance;
+        [CanBeNull]
+        private ILogger _logger;
 
         public GlobalExceptionFilter(int order)
         {
             Order = order;
         }
 
-        [UsedImplicitly]
+        [NotNull]
         public ILogger Logger
-        {
-            get => _logger;
-            set
-            {
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                if (value != null)
-                {
-                    _logger = value;
-                }
-            }
-        }
+            => _logger ??= PPWLogging.GetLogger(GetType());
 
         [UsedImplicitly]
         [CanBeNull]
@@ -58,7 +50,7 @@ namespace PPWCode.Server.Core.API.Exceptions
                 && ExceptionHandler.Process(context);
             if (!handled)
             {
-                Logger.Error(context.Exception.Message, context.Exception);
+                Logger.LogError(context.Exception.Message, context.Exception);
                 context.Result =
                     new ObjectResult(context.Exception)
                     {

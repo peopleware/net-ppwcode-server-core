@@ -14,6 +14,7 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 
 using PPWCode.Vernacular.Contracts.I;
 
@@ -26,7 +27,7 @@ namespace PPWCode.Server.Core.API.Exceptions
         {
             if (context.Exception is ContractViolation e)
             {
-                Logger.Error(e.Message, e);
+                Logger.LogError(e.Message, e);
                 context.Result =
                     new ObjectResult(e.Message)
                     {

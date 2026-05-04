@@ -1,4 +1,4 @@
-﻿// Copyright 2024 by PeopleWare n.v..
+﻿// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using PPWCode.API.Core;
 using PPWCode.Vernacular.Exceptions.IV;
@@ -52,7 +53,7 @@ namespace PPWCode.Server.Core.API.Exceptions
         {
             if (context.Exception is SemanticException e)
             {
-                Logger.Info(e.Message, e);
+                Logger.LogInformation(e.Message, e);
                 HttpStatusCode httpStatusCode = DetermineHttpStatusCode((dynamic)e);
                 context.Result =
                     httpStatusCode == HttpStatusCode.BadRequest
