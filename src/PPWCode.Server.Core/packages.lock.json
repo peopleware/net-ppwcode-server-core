@@ -57,9 +57,9 @@
       },
       "PPWCode.API.Core": {
         "type": "Direct",
-        "requested": "[2.*, )",
-        "resolved": "2.1.1",
-        "contentHash": "8xA4WoQ9KQh2g1y7Shec8Psh6Lr23rGSM4kR0ab+TeACurLdeteVwUzBjmLJfW+DQD0GgmVW1a0ybkv0DV008g==",
+        "requested": "[3.*-*, )",
+        "resolved": "3.0.0-alpha.2",
+        "contentHash": "kdVp8oXMjg4v/AsluE2gFnqhMoGXTSA7NapCw2SlXiBfBlPH3SWy5qpmRG4qPimpPaYsF9unNCIt/V+SP+30cg==",
         "dependencies": {
           "JetBrains.Annotations": "2025.2.4"
         }
@@ -72,15 +72,15 @@
       },
       "PPWCode.Vernacular.NHibernate.III": {
         "type": "Direct",
-        "requested": "[4.*, )",
-        "resolved": "4.2.0",
-        "contentHash": "Q+t7LYlCKBUOXIDeVJz5psyWPe0IFZn1jRf9vdG9Dpf1MPeh4cX7+QzMORl14/bo3U7cwCIFFNc2oKcS8KRhOA==",
+        "requested": "[5.*-*, )",
+        "resolved": "5.0.0-alpha.2",
+        "contentHash": "TKVmgTHnzbEWAj2Yn6T/86/0o8zOnCPiKc7EaQHUwtsdqc9OHAoK0eMgBPXJAWdAVex/J4FdPVRgAwi9HRR13w==",
         "dependencies": {
-          "Common.Logging": "[3.4.1, 4.0.0)",
           "JetBrains.Annotations": "2025.2.4",
           "NHibernate": "5.6.0",
+          "PPWCode.Vernacular.Exceptions.IV": "2.2.1",
           "PPWCode.Vernacular.Persistence.IV": "2.1.1",
-          "System.Configuration.ConfigurationManager": "10.0.5"
+          "System.Configuration.ConfigurationManager": "10.0.7"
         }
       },
       "StyleCop.Analyzers": {
@@ -164,19 +164,6 @@
         "dependencies": {
           "NETStandard.Library": "1.6.1"
         }
-      },
-      "Common.Logging": {
-        "type": "Transitive",
-        "resolved": "3.4.1",
-        "contentHash": "5eZ/vgEOqzLg4PypZqnJ+wMhhgHyckicbZY4iDxqQ4FtOz0CpdYZ0xQ78aszMzeAJZiLLb5VdR9tPfunVQLz6g==",
-        "dependencies": {
-          "Common.Logging.Core": "3.4.1"
-        }
-      },
-      "Common.Logging.Core": {
-        "type": "Transitive",
-        "resolved": "3.4.1",
-        "contentHash": "wLHldZHvxsSD6Ahonfj00/SkfHfKqO+YT6jsUwVm8Rch1REL9IArHAcSLXxYxYfu5/4ydGtmXvOtaH3AkVPu0A=="
       },
       "Google.Protobuf": {
         "type": "Transitive",
@@ -507,9 +494,9 @@
       },
       "PPWCode.API.Core": {
         "type": "Direct",
-        "requested": "[2.*, )",
-        "resolved": "2.1.1",
-        "contentHash": "8xA4WoQ9KQh2g1y7Shec8Psh6Lr23rGSM4kR0ab+TeACurLdeteVwUzBjmLJfW+DQD0GgmVW1a0ybkv0DV008g==",
+        "requested": "[3.*-*, )",
+        "resolved": "3.0.0-alpha.2",
+        "contentHash": "kdVp8oXMjg4v/AsluE2gFnqhMoGXTSA7NapCw2SlXiBfBlPH3SWy5qpmRG4qPimpPaYsF9unNCIt/V+SP+30cg==",
         "dependencies": {
           "JetBrains.Annotations": "2025.2.4"
         }
@@ -522,13 +509,13 @@
       },
       "PPWCode.Vernacular.NHibernate.III": {
         "type": "Direct",
-        "requested": "[4.*, )",
-        "resolved": "4.2.0",
-        "contentHash": "Q+t7LYlCKBUOXIDeVJz5psyWPe0IFZn1jRf9vdG9Dpf1MPeh4cX7+QzMORl14/bo3U7cwCIFFNc2oKcS8KRhOA==",
+        "requested": "[5.*-*, )",
+        "resolved": "5.0.0-alpha.2",
+        "contentHash": "TKVmgTHnzbEWAj2Yn6T/86/0o8zOnCPiKc7EaQHUwtsdqc9OHAoK0eMgBPXJAWdAVex/J4FdPVRgAwi9HRR13w==",
         "dependencies": {
-          "Common.Logging": "[3.4.1, 4.0.0)",
           "JetBrains.Annotations": "2025.2.4",
           "NHibernate": "5.6.0",
+          "PPWCode.Vernacular.Exceptions.IV": "2.2.1",
           "PPWCode.Vernacular.Persistence.IV": "2.1.1",
           "System.Configuration.ConfigurationManager": "8.0.1"
         }
@@ -614,19 +601,6 @@
         "dependencies": {
           "NETStandard.Library": "1.6.1"
         }
-      },
-      "Common.Logging": {
-        "type": "Transitive",
-        "resolved": "3.4.1",
-        "contentHash": "5eZ/vgEOqzLg4PypZqnJ+wMhhgHyckicbZY4iDxqQ4FtOz0CpdYZ0xQ78aszMzeAJZiLLb5VdR9tPfunVQLz6g==",
-        "dependencies": {
-          "Common.Logging.Core": "3.4.1"
-        }
-      },
-      "Common.Logging.Core": {
-        "type": "Transitive",
-        "resolved": "3.4.1",
-        "contentHash": "wLHldZHvxsSD6Ahonfj00/SkfHfKqO+YT6jsUwVm8Rch1REL9IArHAcSLXxYxYfu5/4ydGtmXvOtaH3AkVPu0A=="
       },
       "Google.Protobuf": {
         "type": "Transitive",
@@ -957,9 +931,9 @@
       },
       "PPWCode.API.Core": {
         "type": "Direct",
-        "requested": "[2.*, )",
-        "resolved": "2.1.1",
-        "contentHash": "8xA4WoQ9KQh2g1y7Shec8Psh6Lr23rGSM4kR0ab+TeACurLdeteVwUzBjmLJfW+DQD0GgmVW1a0ybkv0DV008g==",
+        "requested": "[3.*-*, )",
+        "resolved": "3.0.0-alpha.2",
+        "contentHash": "kdVp8oXMjg4v/AsluE2gFnqhMoGXTSA7NapCw2SlXiBfBlPH3SWy5qpmRG4qPimpPaYsF9unNCIt/V+SP+30cg==",
         "dependencies": {
           "JetBrains.Annotations": "2025.2.4"
         }
@@ -972,15 +946,15 @@
       },
       "PPWCode.Vernacular.NHibernate.III": {
         "type": "Direct",
-        "requested": "[4.*, )",
-        "resolved": "4.2.0",
-        "contentHash": "Q+t7LYlCKBUOXIDeVJz5psyWPe0IFZn1jRf9vdG9Dpf1MPeh4cX7+QzMORl14/bo3U7cwCIFFNc2oKcS8KRhOA==",
+        "requested": "[5.*-*, )",
+        "resolved": "5.0.0-alpha.2",
+        "contentHash": "TKVmgTHnzbEWAj2Yn6T/86/0o8zOnCPiKc7EaQHUwtsdqc9OHAoK0eMgBPXJAWdAVex/J4FdPVRgAwi9HRR13w==",
         "dependencies": {
-          "Common.Logging": "[3.4.1, 4.0.0)",
           "JetBrains.Annotations": "2025.2.4",
           "NHibernate": "5.6.0",
+          "PPWCode.Vernacular.Exceptions.IV": "2.2.1",
           "PPWCode.Vernacular.Persistence.IV": "2.1.1",
-          "System.Configuration.ConfigurationManager": "9.0.14"
+          "System.Configuration.ConfigurationManager": "9.0.15"
         }
       },
       "StyleCop.Analyzers": {
@@ -1064,19 +1038,6 @@
         "dependencies": {
           "NETStandard.Library": "1.6.1"
         }
-      },
-      "Common.Logging": {
-        "type": "Transitive",
-        "resolved": "3.4.1",
-        "contentHash": "5eZ/vgEOqzLg4PypZqnJ+wMhhgHyckicbZY4iDxqQ4FtOz0CpdYZ0xQ78aszMzeAJZiLLb5VdR9tPfunVQLz6g==",
-        "dependencies": {
-          "Common.Logging.Core": "3.4.1"
-        }
-      },
-      "Common.Logging.Core": {
-        "type": "Transitive",
-        "resolved": "3.4.1",
-        "contentHash": "wLHldZHvxsSD6Ahonfj00/SkfHfKqO+YT6jsUwVm8Rch1REL9IArHAcSLXxYxYfu5/4ydGtmXvOtaH3AkVPu0A=="
       },
       "Google.Protobuf": {
         "type": "Transitive",
