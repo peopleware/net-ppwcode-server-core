@@ -18,6 +18,7 @@ ProjectSection(SolutionItems) = preProject
 	src\common.props = src\common.props
 	src\Directory.Build.props = src\Directory.Build.props
 	src\Directory.Packages.props = src\Directory.Packages.props
+	global.json = global.json
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PPWCode.Server.Core", "src\PPWCode.Server.Core\PPWCode.Server.Core.csproj", "{5402A083-6C2C-407A-8AEB-FD6181875130}"
