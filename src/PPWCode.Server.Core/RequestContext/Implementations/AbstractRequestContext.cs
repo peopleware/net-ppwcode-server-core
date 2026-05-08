@@ -19,7 +19,6 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 using PPWCode.Server.Core.RequestContext.Interfaces;
-using PPWCode.Server.Core.Utils;
 using PPWCode.Vernacular.Persistence.IV;
 
 namespace PPWCode.Server.Core.RequestContext.Implementations

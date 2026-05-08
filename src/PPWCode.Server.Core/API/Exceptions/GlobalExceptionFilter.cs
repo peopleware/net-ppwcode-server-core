@@ -18,8 +18,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
-using PPWCode.Server.Core.Utils;
-
 namespace PPWCode.Server.Core.API.Exceptions
 {
     public class GlobalExceptionFilter

@@ -14,7 +14,6 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 using PPWCode.Server.Core.Managers.Interfaces;
-using PPWCode.Server.Core.Utils;
 
 namespace PPWCode.Server.Core.Managers.Implementations
 {

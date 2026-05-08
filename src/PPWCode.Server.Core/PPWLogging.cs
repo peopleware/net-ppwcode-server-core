@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
-namespace PPWCode.Server.Core.Utils;
+namespace PPWCode.Server.Core;
 
 /// <summary>
 ///     Central logging configuration point for the PPWCode.Service.Core library.
