@@ -16,9 +16,6 @@
         <PackageReference Include="PPWCode.Vernacular.NHibernate.III"/>
         <PackageReference Include="PPWCode.API.Core"/>
 
-        <!-- Castle Windsor -->
-        <PackageReference Include="Castle.Windsor"/>
-
         <!-- NHibernate -->
         <PackageReference Include="NHibernateProfiler.Appender"/>
 
