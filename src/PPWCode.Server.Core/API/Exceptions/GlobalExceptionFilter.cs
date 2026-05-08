@@ -9,6 +9,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using JetBrains.Annotations;
@@ -21,34 +23,42 @@ using Microsoft.Extensions.Logging;
 namespace PPWCode.Server.Core.API.Exceptions
 {
     public class GlobalExceptionFilter
-        : IAsyncExceptionFilter,
-          IOrderedFilter
+        : IAsyncExceptionFilter
     {
+        private readonly IExceptionHandler[] _handlers;
+
         [CanBeNull]
         private ILogger _logger;
 
-        public GlobalExceptionFilter(int order)
+        public GlobalExceptionFilter(
+            IEnumerable<IExceptionHandler> handlers)
         {
-            Order = order;
+            _handlers = handlers.ToArray();
         }
 
         [NotNull]
         public ILogger Logger
             => _logger ??= PPWLogging.GetLogger(GetType());
 
-        [UsedImplicitly]
-        [CanBeNull]
-        public IExceptionHandler ExceptionHandler { get; set; }
-
         /// <inheritdoc />
         public Task OnExceptionAsync(ExceptionContext context)
         {
-            bool handled =
-                (ExceptionHandler != null)
-                && ExceptionHandler.Process(context);
+            bool handled = false;
+            foreach (IExceptionHandler handler in _handlers)
+            {
+                handled = handler.Process(context);
+                if (handled)
+                {
+                    break;
+                }
+            }
+
             if (!handled)
             {
-                Logger.LogError(context.Exception.Message, context.Exception);
+                Logger.LogError(
+                    context.Exception,
+                    "No exception handler registered for the following, returning status code 500: {Message}",
+                    context.Exception.Message);
                 context.Result =
                     new ObjectResult(context.Exception)
                     {
@@ -60,8 +70,5 @@ namespace PPWCode.Server.Core.API.Exceptions
 
             return Task.CompletedTask;
         }
-
-        /// <inheritdoc />
-        public int Order { get; }
     }
 }
