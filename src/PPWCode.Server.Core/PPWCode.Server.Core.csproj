@@ -23,7 +23,6 @@
         <PackageReference Include="NHibernateProfiler.Appender"/>
 
         <!-- System -->
-        <PackageReference Include="System.Data.SqlClient"/>
         <PackageReference Include="System.Configuration.ConfigurationManager"/>
         <PackageReference Include="Asp.Versioning.Mvc"/>
     </ItemGroup>
