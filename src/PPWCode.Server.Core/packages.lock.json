@@ -101,15 +101,6 @@
           "System.Security.Cryptography.ProtectedData": "10.0.7"
         }
       },
-      "System.Data.SqlClient": {
-        "type": "Direct",
-        "requested": "[4.*, )",
-        "resolved": "4.9.1",
-        "contentHash": "A7RK9I4UaVHJ407GTfy37S4ABHt1+lZ+/uoA54zTv0XaaWgHO5BtXSMzMVqB6socIHEeeK5K1YRgaxCEfD79wQ==",
-        "dependencies": {
-          "runtime.native.System.Data.SqlClient.sni": "4.4.0"
-        }
-      },
       "Antlr3.Runtime": {
         "type": "Transitive",
         "resolved": "3.5.1",
@@ -289,8 +280,8 @@
       },
       "runtime.native.System.Data.SqlClient.sni": {
         "type": "Transitive",
-        "resolved": "4.4.0",
-        "contentHash": "A8v6PGmk+UGbfWo5Ixup0lPM4swuSwOiayJExZwKIOjTlFFQIsu3QnDXECosBEyrWSPryxBVrdqtJyhK3BaupQ==",
+        "resolved": "4.7.0",
+        "contentHash": "9kyFSIdN3T0qjDQ2R0HRXYIhS3l5psBzQi6qqhdLz+SzFyEy4sVxNOke+yyYv8Cu8rPER12c3RDjLT8wF3WBYQ==",
         "dependencies": {
           "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
           "runtime.win-x64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
@@ -363,6 +354,14 @@
           "System.Composition.AttributedModel": "7.0.0",
           "System.Composition.Hosting": "7.0.0",
           "System.Composition.Runtime": "7.0.0"
+        }
+      },
+      "System.Data.SqlClient": {
+        "type": "Transitive",
+        "resolved": "4.8.6",
+        "contentHash": "2Ij/LCaTQRyAi5lAv7UUTV9R2FobC8xN9mE0fXBZohum/xLl8IZVmE98Rq5ugQHjCgTBRKqpXRb4ORulRdA6Ig==",
+        "dependencies": {
+          "runtime.native.System.Data.SqlClient.sni": "4.7.0"
         }
       },
       "System.Drawing.Common": {
@@ -551,15 +550,6 @@
           "System.Security.Cryptography.ProtectedData": "8.0.0"
         }
       },
-      "System.Data.SqlClient": {
-        "type": "Direct",
-        "requested": "[4.*, )",
-        "resolved": "4.9.1",
-        "contentHash": "A7RK9I4UaVHJ407GTfy37S4ABHt1+lZ+/uoA54zTv0XaaWgHO5BtXSMzMVqB6socIHEeeK5K1YRgaxCEfD79wQ==",
-        "dependencies": {
-          "runtime.native.System.Data.SqlClient.sni": "4.4.0"
-        }
-      },
       "Antlr3.Runtime": {
         "type": "Transitive",
         "resolved": "3.5.1",
@@ -739,8 +729,8 @@
       },
       "runtime.native.System.Data.SqlClient.sni": {
         "type": "Transitive",
-        "resolved": "4.4.0",
-        "contentHash": "A8v6PGmk+UGbfWo5Ixup0lPM4swuSwOiayJExZwKIOjTlFFQIsu3QnDXECosBEyrWSPryxBVrdqtJyhK3BaupQ==",
+        "resolved": "4.7.0",
+        "contentHash": "9kyFSIdN3T0qjDQ2R0HRXYIhS3l5psBzQi6qqhdLz+SzFyEy4sVxNOke+yyYv8Cu8rPER12c3RDjLT8wF3WBYQ==",
         "dependencies": {
           "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
           "runtime.win-x64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
@@ -813,6 +803,14 @@
           "System.Composition.AttributedModel": "7.0.0",
           "System.Composition.Hosting": "7.0.0",
           "System.Composition.Runtime": "7.0.0"
+        }
+      },
+      "System.Data.SqlClient": {
+        "type": "Transitive",
+        "resolved": "4.8.6",
+        "contentHash": "2Ij/LCaTQRyAi5lAv7UUTV9R2FobC8xN9mE0fXBZohum/xLl8IZVmE98Rq5ugQHjCgTBRKqpXRb4ORulRdA6Ig==",
+        "dependencies": {
+          "runtime.native.System.Data.SqlClient.sni": "4.7.0"
         }
       },
       "System.Drawing.Common": {
@@ -1001,15 +999,6 @@
           "System.Security.Cryptography.ProtectedData": "9.0.15"
         }
       },
-      "System.Data.SqlClient": {
-        "type": "Direct",
-        "requested": "[4.*, )",
-        "resolved": "4.9.1",
-        "contentHash": "A7RK9I4UaVHJ407GTfy37S4ABHt1+lZ+/uoA54zTv0XaaWgHO5BtXSMzMVqB6socIHEeeK5K1YRgaxCEfD79wQ==",
-        "dependencies": {
-          "runtime.native.System.Data.SqlClient.sni": "4.4.0"
-        }
-      },
       "Antlr3.Runtime": {
         "type": "Transitive",
         "resolved": "3.5.1",
@@ -1189,8 +1178,8 @@
       },
       "runtime.native.System.Data.SqlClient.sni": {
         "type": "Transitive",
-        "resolved": "4.4.0",
-        "contentHash": "A8v6PGmk+UGbfWo5Ixup0lPM4swuSwOiayJExZwKIOjTlFFQIsu3QnDXECosBEyrWSPryxBVrdqtJyhK3BaupQ==",
+        "resolved": "4.7.0",
+        "contentHash": "9kyFSIdN3T0qjDQ2R0HRXYIhS3l5psBzQi6qqhdLz+SzFyEy4sVxNOke+yyYv8Cu8rPER12c3RDjLT8wF3WBYQ==",
         "dependencies": {
           "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
           "runtime.win-x64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
@@ -1263,6 +1252,14 @@
           "System.Composition.AttributedModel": "7.0.0",
           "System.Composition.Hosting": "7.0.0",
           "System.Composition.Runtime": "7.0.0"
+        }
+      },
+      "System.Data.SqlClient": {
+        "type": "Transitive",
+        "resolved": "4.8.6",
+        "contentHash": "2Ij/LCaTQRyAi5lAv7UUTV9R2FobC8xN9mE0fXBZohum/xLl8IZVmE98Rq5ugQHjCgTBRKqpXRb4ORulRdA6Ig==",
+        "dependencies": {
+          "runtime.native.System.Data.SqlClient.sni": "4.7.0"
         }
       },
       "System.Drawing.Common": {
