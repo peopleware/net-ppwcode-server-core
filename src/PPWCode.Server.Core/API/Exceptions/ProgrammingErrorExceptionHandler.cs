@@ -14,6 +14,7 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 
 using PPWCode.Vernacular.Exceptions.IV;
 
@@ -32,7 +33,7 @@ namespace PPWCode.Server.Core.API.Exceptions
                         ? StatusCodes.Status400BadRequest
                         : StatusCodes.Status500InternalServerError;
 
-                Logger.Error(e.Message, e);
+                Logger.LogError(e.Message, e);
                 context.Result =
                     new ObjectResult(FlattenExceptions(e))
                     {

@@ -10,16 +10,9 @@ This file is translated into markdown and used for the release notes in the GitH
 :ppwcode-docs: https://peopleware.github.io/net-ppwcode-docs/ppwcode-server-core/
 
 
-=== Fixes
+=== Breaking
 
-* remove unused dependency `System.Data.SqlClient`
-
-
-=== Changes
-
-* use dotnet sdk `10.0.301`
-* use portable pdbs
-* package dependencies
-** `Castle.Windsor`, remove upper version limit and use lower limit `5.1.1`
-** `System.Configuration.ConfigurationManager`, use version matching version dotnet SDK
-** upgrade remaining dependencies
+* remove support for and dependency on `Castle.Windsor`
+* replace Castle `ILogger` with Microsoft `ILogger`
+* `GlobalExceptionFilter` no longer implements `IOrderedFilter`
+* remove `Castle.Windsor` specific class `ServiceSelector`

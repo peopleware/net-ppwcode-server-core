@@ -12,11 +12,10 @@
 using System;
 using System.Threading.Tasks;
 
-using Castle.Core.Logging;
-
 using JetBrains.Annotations;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 using PPWCode.API.Core;
 using PPWCode.Server.Core.Managers.Implementations;
@@ -34,22 +33,12 @@ namespace PPWCode.Server.Core.API
         : ControllerBase,
           IRestApiController
     {
-        private ILogger _logger = NullLogger.Instance;
+        [CanBeNull]
+        private ILogger _logger;
 
         [NotNull]
-        [UsedImplicitly]
         public ILogger Logger
-        {
-            get => _logger;
-            set
-            {
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                if (value != null)
-                {
-                    _logger = value;
-                }
-            }
-        }
+            => _logger ??= PPWLogging.GetLogger(GetType());
 
         /// <summary>
         ///     Converts a <see cref="IPagedList{TModel}" />, where <c>T</c> is equal to <typeparamref name="TModel" />, to a
@@ -77,7 +66,7 @@ namespace PPWCode.Server.Core.API
             where TDto : class, IPersistentDto<TIdentity>
             where TContext : MapperContext, new()
             => new PagedList<TDto>(
-                await itemMapper.MapAsync(pagedModels.Items, context ?? new TContext(), HttpContext.RequestAborted),
+                await itemMapper.MapAsync(pagedModels.Items, context ?? new TContext(), HttpContext.RequestAborted).ConfigureAwait(false),
                 pagedModels.PageIndex,
                 pagedModels.PageSize,
                 pagedModels.TotalCount);
@@ -117,7 +106,7 @@ namespace PPWCode.Server.Core.API
             where TMapperContext : MapperContext, new()
             where TLinksContext : LinksContext, new()
         {
-            TDto[] dtos = await itemMapper.MapAsync(pagedModels.Items, mapperContext ?? new TMapperContext(), HttpContext.RequestAborted);
+            TDto[] dtos = await itemMapper.MapAsync(pagedModels.Items, mapperContext ?? new TMapperContext(), HttpContext.RequestAborted).ConfigureAwait(false);
             linksManager.Initialize(pagedModels.Items, dtos, linksContext ?? new TLinksContext());
             return new PagedList<TDto>(
                 dtos,
