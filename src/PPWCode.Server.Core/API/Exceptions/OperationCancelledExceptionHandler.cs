@@ -25,7 +25,7 @@ namespace PPWCode.Server.Core.API.Exceptions
     {
         protected override bool OnProcess(ExceptionContext context)
         {
-            if (context.Exception is NotImplementedException e)
+            if (context.Exception is OperationCanceledException e)
             {
                 Logger.LogError(e.Message, e);
                 context.Result = new ClientClosedResult();
