@@ -63,8 +63,8 @@
       "PPWCode.Vernacular.NHibernate.III": {
         "type": "Direct",
         "requested": "[5.*, )",
-        "resolved": "5.0.0",
-        "contentHash": "XIy3gl9NgsK+vl7nvuZjApz8/oF5YmCGKXUkkwa+Xm9DCADtJFQIJLrDupSC2X6b29CxCa3D4Dca+24rSpyn0A==",
+        "resolved": "5.0.1",
+        "contentHash": "r2U8cDG0tPVYbtqE2mqF+zAOWnp4wSp1RCT7Ws8L9UefMuaBtvOHWtMRJ/RA10Ss5GCGuQDfGRX2uUMUBJ8aaw==",
         "dependencies": {
           "JetBrains.Annotations": "2025.2.4",
           "NHibernate": "5.6.1",
@@ -485,8 +485,8 @@
       "PPWCode.Vernacular.NHibernate.III": {
         "type": "Direct",
         "requested": "[5.*, )",
-        "resolved": "5.0.0",
-        "contentHash": "XIy3gl9NgsK+vl7nvuZjApz8/oF5YmCGKXUkkwa+Xm9DCADtJFQIJLrDupSC2X6b29CxCa3D4Dca+24rSpyn0A==",
+        "resolved": "5.0.1",
+        "contentHash": "r2U8cDG0tPVYbtqE2mqF+zAOWnp4wSp1RCT7Ws8L9UefMuaBtvOHWtMRJ/RA10Ss5GCGuQDfGRX2uUMUBJ8aaw==",
         "dependencies": {
           "JetBrains.Annotations": "2025.2.4",
           "NHibernate": "5.6.1",
@@ -907,8 +907,8 @@
       "PPWCode.Vernacular.NHibernate.III": {
         "type": "Direct",
         "requested": "[5.*, )",
-        "resolved": "5.0.0",
-        "contentHash": "XIy3gl9NgsK+vl7nvuZjApz8/oF5YmCGKXUkkwa+Xm9DCADtJFQIJLrDupSC2X6b29CxCa3D4Dca+24rSpyn0A==",
+        "resolved": "5.0.1",
+        "contentHash": "r2U8cDG0tPVYbtqE2mqF+zAOWnp4wSp1RCT7Ws8L9UefMuaBtvOHWtMRJ/RA10Ss5GCGuQDfGRX2uUMUBJ8aaw==",
         "dependencies": {
           "JetBrains.Annotations": "2025.2.4",
           "NHibernate": "5.6.1",
