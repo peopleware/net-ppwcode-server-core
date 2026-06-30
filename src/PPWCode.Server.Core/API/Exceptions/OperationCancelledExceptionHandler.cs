@@ -27,7 +27,7 @@ namespace PPWCode.Server.Core.API.Exceptions
         {
             if (context.Exception is OperationCanceledException e)
             {
-                Logger.LogError(e.Message, e);
+                Logger.LogInformation(e.Message, e);
                 context.Result = new ClientClosedResult();
                 return true;
             }
