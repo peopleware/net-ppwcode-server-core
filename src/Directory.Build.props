@@ -22,7 +22,7 @@
 
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/peopleware/net-ppwcode-server-core.git</RepositoryUrl>
-        <PackageTags>ppwcode server core</PackageTags>
+        <PackageTags>ppwcode server core gen4</PackageTags>
         <PackageProjectUrl>https://github.com/peopleware/net-ppwcode-server-core</PackageProjectUrl>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
